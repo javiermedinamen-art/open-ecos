@@ -14,12 +14,12 @@ const BEATS = [
   {
     kicker: "De qué se trata",
     title: "Un catálogo, no un depósito.",
-    body: "Cada medición ambiental llega con su archivo y con una explicación: para qué sirve, cómo se lee y qué no puede responder. La lectura es para entenderlo. La ficha es para citarlo.",
+    body: "Cada medición llega con su archivo y con lo necesario para leerla: para qué sirve, cómo se mira y qué no alcanza a decir. La lectura es para entenderla. La ficha es para citarla.",
   },
   {
     kicker: "Por qué existe",
-    title: "Lo que se midió con todos, vuelve a todos.",
-    body: "La nieve, el agua y la temperatura de un humedal no son una mercancía. Las midieron redes públicas, con trabajo pagado en común, sobre un territorio que no debería cercarse. Cuando ese número queda mudo en una carpeta, o se vende como servicio, el conocimiento se privatiza. Open Ecos parte de otra idea: el dato libre es parte de la libertad de saber dónde se vive. Se publica para usarse, sin pedirle permiso a un intermediario, y con el límite escrito al lado para que nadie lo convierta en una consigna.",
+    title: "Si se midió en público, tiene que poder leerse.",
+    body: "La nieve de una estación, el agua de un humedal, la temperatura de un río. Esas series las sostienen redes que se pagan entre todos. Cuando el archivo queda cerrado, o solo se consulta pagando, ese trabajo no le sirve a quien estudia el lugar ni a quien tiene que cuidarlo. Aquí se publican con su unidad y con lo que no alcanzan a decir.",
   },
 ];
 
@@ -218,6 +218,7 @@ function readingDocument(dataset) {
     </section>
   `).join("");
   return `
+    <article class="reading">
     <p><a class="back" href="#/">← Catálogo</a></p>
     ${modeSwitch(dataset, true)}
     <p class="kicker">Lectura</p>
@@ -235,6 +236,7 @@ function readingDocument(dataset) {
       <div id="chart"></div>
       <p class="chart-note"><a href="#/dataset/${encodeURIComponent(dataset.id)}/ficha">La ficha</a> tiene unidades, métodos y la cita.</p>
     </section>
+    </article>
   `;
 }
 

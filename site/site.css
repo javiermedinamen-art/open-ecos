@@ -405,9 +405,16 @@ h2 { font-size: clamp(1.8rem, 3vw, 2.4rem); margin: 0 0 0.6rem; }
   font-size: 0.88rem;
 }
 .modes a[aria-current="page"] { color: var(--ink); border-color: var(--ink); }
-.story { margin: 2.2rem 0; max-width: 40rem; }
-.story p { font-size: 1.08rem; }
-.limits { border-top: 1px solid var(--line); padding-top: 1.2rem; max-width: 40rem; }
+.reading .lede,
+.reading .story p,
+.reading .limits {
+  max-width: 58rem;
+}
+.story { margin: 2.4rem 0; max-width: none; }
+.story p { font-size: 1.15rem; line-height: 1.55; }
+.story .figure { margin: 1.15rem 0 0; }
+.story .figure img { width: 100%; height: auto; }
+.limits { border-top: 1px solid var(--line); padding-top: 1.2rem; max-width: none; }
 .limits ul { margin: 0.4rem 0 0; padding-left: 1.1rem; }
 .limits li { margin: 0.35rem 0; }
 
