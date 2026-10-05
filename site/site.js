@@ -14,12 +14,12 @@ const BEATS = [
   {
     kicker: "De qué se trata",
     title: "Un catálogo, no un depósito.",
-    body: "Cada medición llega con su archivo y con lo necesario para leerla: para qué sirve, cómo se mira y qué no alcanza a decir. La lectura es para entenderla. La ficha es para citarla.",
+    body: "Cada registro llega con el archivo y con lo que el archivo calla: para qué sirve, cómo se lee y dónde se detiene. La lectura es para comprenderlo. La ficha, para citarlo.",
   },
   {
     kicker: "Por qué existe",
-    title: "Si se midió en público, tiene que poder leerse.",
-    body: "La nieve de una estación, el agua de un humedal, la temperatura de un río. Esas series las sostienen redes que se pagan entre todos. Cuando el archivo queda cerrado, o solo se consulta pagando, ese trabajo no le sirve a quien estudia el lugar ni a quien tiene que cuidarlo. Aquí se publican con su unidad y con lo que no alcanzan a decir.",
+    title: "Lo medido en común permanece abierto.",
+    body: "La nieve, el agua de un humedal, la temperatura de un río. Esas series las sostienen redes comunes. Guardar el archivo, o cobrar por consultarlo, deja fuera a quien observa el lugar y a quien lo cuida. Aquí siguen a la vista, con su unidad y con su límite.",
   },
 ];
 
