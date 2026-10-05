@@ -1,6 +1,6 @@
 {
   "formatVersion": 1,
-  "generatedAt": "2026-10-05T21:38:10+00:00",
+  "generatedAt": "2026-10-05T23:57:16+00:00",
   "datasets": [
     {
       "id": "ejemplo-salar-huasco-temperatura",
@@ -34,6 +34,7 @@
       "previewKind": "map-points",
       "path": "datasets/ejemplo-salar-huasco-temperatura/dataset.json",
       "doi": null,
+      "publication": null,
       "hasReading": true,
       "readingTitle": "Una visita inventada al agua del salar",
       "cover": null
@@ -71,6 +72,12 @@
       "previewKind": "map-points",
       "path": "datasets/profundidad-nieve-andes-sur-2010-2024/dataset.json",
       "doi": "10.5281/zenodo.21577171",
+      "publication": {
+        "title": "Daily snow depth in the Southern Andes (2010–2024): a quality-controlled dataset from Chile and Argentina",
+        "venue": "Earth System Science Data",
+        "doi": "10.5194/essd-18-7097-2026",
+        "year": "2026"
+      },
       "hasReading": true,
       "readingTitle": "La nieve, anotada en 69 lugares de los Andes",
       "cover": "datasets/profundidad-nieve-andes-sur-2010-2024/media/un-punto.jpg"

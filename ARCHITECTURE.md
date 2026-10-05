@@ -46,7 +46,7 @@ Eso es lo que lo distingue de un portal de descarga. datos.gob.cl puede seguir s
 | GeoTIFF, LAS/LAZ, mosaicos | Zenodo, enlazados en `files[]` con `role: archive` | DOI, versión y almacenamiento de investigación. Git no es un archivo científico. |
 | Índice del sitio | `catalog/index.json` | Generado. Se commitea para que el host no necesite un build. |
 
-El bbox publicado va siempre en EPSG:4326, orden oeste, sur, este, norte. El CRS de captura se anota en `methods.crsOriginal`. Si el origen es desconocido, se escribe `desconocido` y se repite en las advertencias. `country` es una lista de códigos ISO: un dataset puede cubrir Chile y Argentina. Si hay DOI, va en `doi`.
+El bbox publicado va siempre en EPSG:4326, orden oeste, sur, este, norte. El CRS de captura se anota en `methods.crsOriginal`. Si el origen es desconocido, se escribe `desconocido` y se repite en las advertencias. `country` es una lista de códigos ISO: un dataset puede cubrir Chile y Argentina. Si hay DOI, va en `doi`. Si hay un artículo que publica el registro, va en `publication`. Si no lo hay, el campo no va.
 
 Una variable se declara de una de estas dos formas. Si el valor vive en una columna, `column` nombra esa columna y ella tiene que existir en un CSV o en las propiedades del GeoJSON. Si el valor es una tabla ancha —el tiempo en una columna y una serie distinta en cada columna siguiente, aunque el encabezado sea un código de estación— la variable usa `layout.type: wide`, con el archivo y la columna índice. El validador rechaza la ficha cuando eso no se cumple.
 

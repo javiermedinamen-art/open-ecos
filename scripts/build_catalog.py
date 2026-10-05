@@ -62,6 +62,17 @@ def _cover(dataset: dict) -> str | None:
     return None
 
 
+def _publication(publication: dict | None) -> dict | None:
+    if not publication:
+        return None
+    return {
+        "title": publication["title"],
+        "venue": publication["venue"],
+        "doi": publication["doi"],
+        "year": publication["year"],
+    }
+
+
 def _entry(dataset: dict) -> dict:
     return {
         "id": dataset["id"],
@@ -80,6 +91,7 @@ def _entry(dataset: dict) -> dict:
         "previewKind": dataset["preview"]["kind"],
         "path": f"datasets/{dataset['id']}/dataset.json",
         "doi": dataset.get("doi"),
+        "publication": _publication(dataset.get("publication")),
         "hasReading": "divulgacion" in dataset,
         "readingTitle": (dataset.get("divulgacion") or {}).get("title"),
         "cover": _cover(dataset),

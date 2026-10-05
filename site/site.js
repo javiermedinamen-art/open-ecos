@@ -323,14 +323,17 @@ function entryHtml(item) {
   const badge = item.status === "published"
     ? ""
     : `<span class="badge ${esc(item.status)}">${esc(statusLabel(item.status))}</span>`;
+  const paper = item.publication
+    ? `<br><a class="publication" href="https://doi.org/${esc(item.publication.doi)}">${esc(item.publication.venue)}, ${esc(item.publication.year)}</a>`
+    : "";
   return `
-    <a class="entry" href="#/dataset/${esc(item.id)}">
+    <article class="entry">
       <div>
-        <h2 class="entry-title">${item.hasReading ? '<span class="badge">Lectura</span>' : ""}${esc(item.title)}</h2>
+        <h2 class="entry-title">${item.hasReading ? '<span class="badge">Lectura</span>' : ""}<a href="#/dataset/${esc(item.id)}">${esc(item.title)}</a></h2>
         <p>${esc(item.summary)}</p>
       </div>
-      <p class="meta">${badge}${esc(item.place)}<br>${esc(item.temporal.start)} – ${esc(item.temporal.end)}<br>${esc(item.themes.join(" · "))}</p>
-    </a>
+      <p class="meta">${badge}${esc(item.place)}<br>${esc(item.temporal.start)} – ${esc(item.temporal.end)}<br>${esc(item.themes.join(" · "))}${paper}</p>
+    </article>
   `;
 }
 
@@ -358,7 +361,8 @@ async function renderDataset(id, mode, token) {
       ${fact("Lugar", dataset.spatial.place)}
       ${fact("Periodo", `${dataset.temporal.start} – ${dataset.temporal.end}`)}
       ${fact("Licencia", dataset.rights.license)}
-      ${fact("DOI", dataset.doi ? "" : "Sin DOI")}
+      ${dataset.doi ? factLink("DOI", `https://doi.org/${dataset.doi}`, `doi.org/${dataset.doi}`) : ""}
+      ${dataset.publication ? factLink("Publicación", `https://doi.org/${dataset.publication.doi}`, dataset.publication.venue) : ""}
     </dl>
     <div id="viewer"></div>
     <div id="chart"></div>
@@ -391,20 +395,16 @@ async function renderDataset(id, mode, token) {
       <p class="index">Cita</p>
       <h2>Cómo citarlo</h2>
       <textarea class="citation" id="citation" readonly>${esc(dataset.citation)}</textarea>
-      <p class="cite-actions">
-        <button class="copy" type="button" data-cite="text" data-label="Cita">Cita</button>
-        <button class="copy" type="button" data-cite="bib" data-label="BibTeX">BibTeX</button>
-        <button class="copy" type="button" data-cite="ris" data-label="RIS">RIS</button>
-      </p>
+      ${citeActions("cite-dataset")}
       <p class="chart-note">${esc(dataset.rights.attribution)}</p>
+      ${publicationHtml(dataset)}
     </section>
   `;
   if (!reading) {
-    const doiFact = dataset.doi
-      ? `<a href="https://doi.org/${esc(dataset.doi)}">doi.org/${esc(dataset.doi)}</a>`
-      : "Sin DOI";
-    document.querySelector(".facts div:last-child strong").innerHTML = doiFact;
-    bindCitation(dataset);
+    bindCitation(document.querySelector("#citation"), document.querySelector("#cite-dataset"), (format) => citationText(dataset, format));
+    if (dataset.publication) {
+      bindCitation(document.querySelector("#paper"), document.querySelector("#cite-paper"), (format) => publicationText(dataset.publication, format));
+    }
   }
   if (dataset.preview && dataset.preview.kind && dataset.preview.kind !== "none") {
     mountViewer(
@@ -443,6 +443,7 @@ function readingDocument(dataset) {
       <h2>Para mirarlo</h2>
       <div id="viewer"></div>
       <div id="chart"></div>
+      ${dataset.publication ? `<p>Publicación: <a href="https://doi.org/${esc(dataset.publication.doi)}">${esc(dataset.publication.title)}</a>. ${esc(publicationWhere(dataset.publication))}.</p>` : ""}
       <p class="chart-note"><a href="#/dataset/${encodeURIComponent(dataset.id)}/ficha">La ficha</a> tiene unidades, métodos y la cita.</p>
     </section>
     </article>
@@ -868,6 +869,32 @@ function fact(label, value) {
   return `<div><span>${esc(label)}</span><strong>${esc(value)}</strong></div>`;
 }
 
+function factLink(label, href, text) {
+  return `<div><span>${esc(label)}</span><strong><a href="${esc(href)}">${esc(text)}</a></strong></div>`;
+}
+
+function citeActions(id) {
+  return `
+    <p class="cite-actions" id="${id}">
+      <button class="copy" type="button" data-cite="text" data-label="Cita">Cita</button>
+      <button class="copy" type="button" data-cite="bib" data-label="BibTeX">BibTeX</button>
+      <button class="copy" type="button" data-cite="ris" data-label="RIS">RIS</button>
+    </p>
+  `;
+}
+
+function publicationHtml(dataset) {
+  const paper = dataset.publication;
+  if (!paper) return "";
+  return `
+    <h2>La publicación</h2>
+    <p><a href="https://doi.org/${esc(paper.doi)}">${esc(paper.title)}</a></p>
+    <p class="chart-note">${esc(publicationWhere(paper))}.</p>
+    <textarea class="citation" id="paper" readonly>${esc(publicationPlain(paper))}</textarea>
+    ${citeActions("cite-paper")}
+  `;
+}
+
 function stationButton(feature, valueField, min, max) {
   const props = feature.properties || {};
   const index = featureIndex(feature);
@@ -987,12 +1014,11 @@ function formatNumber(value) {
   return Number(value).toLocaleString("es-CL", { maximumFractionDigits: 1 });
 }
 
-function bindCitation(dataset) {
-  const box = document.querySelector("#citation");
-  document.querySelector(".cite-actions").addEventListener("click", async (event) => {
+function bindCitation(box, actions, textFor) {
+  actions.addEventListener("click", async (event) => {
     const button = event.target.closest("button");
     if (!button) return;
-    const text = citationText(dataset, button.dataset.cite);
+    const text = textFor(button.dataset.cite);
     box.value = text;
     box.focus();
     box.select();
@@ -1004,7 +1030,7 @@ function bindCitation(dataset) {
       copied = document.execCommand("copy");
     }
     if (!copied) return;
-    for (const item of document.querySelectorAll(".cite-actions button")) item.textContent = item.dataset.label;
+    for (const item of actions.querySelectorAll("button")) item.textContent = item.dataset.label;
     button.textContent = "Copiada";
   });
 }
@@ -1037,6 +1063,68 @@ function bibtex(dataset) {
   }
   fields.push("  howpublished = {Open Ecosystems}");
   return `@misc{${citeKey(dataset)},\n${fields.join(",\n")}\n}`;
+}
+
+function publicationText(paper, format) {
+  if (format === "bib") return publicationBibtex(paper);
+  if (format === "ris") return publicationRis(paper);
+  return publicationPlain(paper);
+}
+
+function publicationPlain(paper) {
+  return `${joinNames(paper.creators)} (${paper.year}). ${paper.title}. ${publicationWhere(paper)}. https://doi.org/${paper.doi}`;
+}
+
+function publicationWhere(paper) {
+  const parts = [paper.venue];
+  if (paper.volume) parts.push(paper.issue ? `${paper.volume}(${paper.issue})` : paper.volume);
+  if (paper.pages) parts.push(paper.pages);
+  return parts.join(", ");
+}
+
+function publicationBibtex(paper) {
+  const fields = [
+    `  author = {${paper.creators.map((creator) => creator.name).join(" and ")}}`,
+    `  title = {${paper.title}}`,
+    `  journal = {${paper.venue}}`,
+    `  year = {${paper.year}}`,
+  ];
+  if (paper.volume) fields.push(`  volume = {${paper.volume}}`);
+  if (paper.issue) fields.push(`  number = {${paper.issue}}`);
+  if (paper.pages) fields.push(`  pages = {${paper.pages.replace("-", "--")}}`);
+  fields.push(`  doi = {${paper.doi}}`, `  url = {https://doi.org/${paper.doi}}`);
+  return `@article{${publicationKey(paper)},\n${fields.join(",\n")}\n}`;
+}
+
+function publicationRis(paper) {
+  const lines = ["TY  - JOUR"];
+  for (const creator of paper.creators) lines.push(`AU  - ${creator.name}`);
+  lines.push(`TI  - ${paper.title}`, `JO  - ${paper.venue}`, `PY  - ${paper.year}`);
+  if (paper.volume) lines.push(`VL  - ${paper.volume}`);
+  if (paper.issue) lines.push(`IS  - ${paper.issue}`);
+  const pages = String(paper.pages || "").split(/\s*[-–]\s*/);
+  if (pages.length === 2) lines.push(`SP  - ${pages[0]}`, `EP  - ${pages[1]}`);
+  lines.push(`DO  - ${paper.doi}`, `UR  - https://doi.org/${paper.doi}`, "ER  - ");
+  return lines.join("\n");
+}
+
+function publicationKey(paper) {
+  const family = paper.creators[0].name.split(",")[0].replace(/[^A-Za-z0-9]/g, "");
+  const slug = paper.title.toLowerCase().split(/\s+/).slice(0, 2).join("").replace(/[^a-z0-9]/g, "");
+  return `${family}${paper.year}${slug}`;
+}
+
+function joinNames(creators) {
+  const names = creators.map((creator) => shortName(creator.name));
+  if (names.length < 2) return names[0] || "";
+  return `${names.slice(0, -1).join(", ")} y ${names[names.length - 1]}`;
+}
+
+function shortName(name) {
+  const [family, given] = name.split(",").map((part) => part.trim());
+  if (!given) return family;
+  const initials = given.split(/\s+/).filter(Boolean).map((part) => `${part[0]}.`).join(" ");
+  return `${family}, ${initials}`;
 }
 
 function ris(dataset) {

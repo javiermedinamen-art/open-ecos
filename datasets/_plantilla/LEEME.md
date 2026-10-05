@@ -9,7 +9,7 @@ El esquema ya exige el tríptico. Esta nota es para no dejarlo vacío de sentido
 1. **Contexto.** Qué lugar y qué ventana de tiempo es. Qué no es.
 2. **Lectura.** Unidad, columnas y sistema de coordenadas. Si el archivo no nombra la unidad, dilo. Una celda vacía no es un cero, salvo que el archivo lo escriba así.
 3. **Uso.** Dos listas: lo que sí se puede preguntar y lo que parece poder preguntarse y no. Ahí va lo que el archivo calla.
-4. **Cita.** Un párrafo listo para copiar, con versión. Si hay DOI, va en `doi`.
+4. **Cita.** Un párrafo listo para copiar, con versión. Si hay DOI, va en `doi`. Si hay un artículo, va en `publication`, con su título, revista y autores. Si no hay artículo, ese campo no se escribe.
 
 Si los números no son reales, el resumen y la lectura tienen que decirlo en la primera frase. Ese registro queda en `example`, no en `published`.
 

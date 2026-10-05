@@ -31,6 +31,7 @@
           "previewKind",
           "path",
           "doi",
+          "publication",
           "hasReading",
           "readingTitle",
           "cover"
@@ -46,6 +47,17 @@
           "place": { "type": "string" },
           "country": { "type": "array", "items": { "type": "string" } },
           "doi": { "type": ["string", "null"] },
+          "publication": {
+            "type": ["object", "null"],
+            "additionalProperties": false,
+            "required": ["title", "venue", "doi", "year"],
+            "properties": {
+              "title": { "type": "string" },
+              "venue": { "type": "string" },
+              "doi": { "type": "string" },
+              "year": { "type": "string" }
+            }
+          },
           "hasReading": { "type": "boolean" },
           "readingTitle": { "type": ["string", "null"] },
           "cover": { "type": ["string", "null"] },
