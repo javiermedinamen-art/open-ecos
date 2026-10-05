@@ -15,7 +15,7 @@ El producto no es un portal de archivos. Es el archivo junto con una explicació
 
 **Curaduría.** Ocurre fuera del sitio, en tu computador. Ahí viven el CSV original, el GeoTIFF del Mavic, la nube del L2 y los scripts de limpieza de esa campaña. Esa carpeta puede llamarse `raw/` y no se versiona.
 
-**Publicación.** Es este repositorio. Una carpeta por dataset, un `dataset.json` que cumple el esquema, y vistas livianas en `data/`. El comando `python scripts/build_catalog.py` revisa todo y escribe `catalog/index.json`.
+**Publicación.** Es este repositorio. Una carpeta por dataset, un `dataset.json` que cumple el esquema, y vistas livianas en `data/`. El comando `python scripts/build_catalog.py` revisa todo y escribe `catalog/index.json`. La carpeta `datasets/_plantilla/` es el molde para un registro nuevo: no entra al catálogo.
 
 **Lectura.** `index.html` y `site/` sirven estos archivos. No calculan nada. Si un archivo no está en el repo o no está enlazado con su URL externa, el sitio no lo puede mostrar. La ruta `#/dataset/<id>/lectura` usa `divulgacion` cuando existe; `#/dataset/<id>/ficha` muestra el tríptico.
 

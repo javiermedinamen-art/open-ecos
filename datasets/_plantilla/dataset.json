@@ -1,0 +1,72 @@
+{
+  "id": "cambia-este-id",
+  "title": "Título que diga qué se midió, dónde y cuándo",
+  "summary": "Un párrafo. Qué es el registro, quién lo midió y qué no alcanza a decir. Si los números no son reales, la primera frase tiene que decirlo.",
+  "language": "es",
+  "status": "draft",
+  "version": "0.1.0",
+  "published": "2026-01-01",
+  "updated": "2026-01-01",
+  "citation": "Apellido, Nombre (año). Título. Versión 0.1.0. Open Ecosystems.",
+  "themes": ["agua"],
+  "spatial": {
+    "place": "Lugar, región, país",
+    "country": ["CL"],
+    "bbox": [-71.0, -33.6, -70.4, -33.2],
+    "crs": "EPSG:4326"
+  },
+  "temporal": {
+    "start": "2020-01-01",
+    "end": "2020-12-31",
+    "resolution": "días"
+  },
+  "creators": [{ "name": "Apellido, Nombre" }],
+  "rights": {
+    "license": "CC-BY-4.0",
+    "attribution": "Apellido, Nombre (año), licencia, enlace.",
+    "derivedFrom": null
+  },
+  "provenance": {
+    "origin": "otro",
+    "sourceName": "De dónde sale el archivo",
+    "sourceUrl": null,
+    "preparedBy": "Open Ecosystems",
+    "preparationNote": "Qué se copió, qué se cambió y qué no se volvió a calcular."
+  },
+  "methods": {
+    "summary": "Instrumento, red y si hubo control de calidad. Si no se reejecutó, dilo.",
+    "instruments": ["Nombre del instrumento"],
+    "crsOriginal": "EPSG:4326",
+    "processing": "Pasos entre el archivo de origen y esta carpeta."
+  },
+  "variables": [
+    {
+      "id": "variable",
+      "name": "Nombre de la variable",
+      "unit": "unidad",
+      "description": "Qué es la columna. Si el archivo no escribe la unidad, dilo aquí.",
+      "column": "columna"
+    }
+  ],
+  "triptico": {
+    "contexto": {
+      "title": "Qué ventana es, y qué no es",
+      "body": "Lugar, periodo y pregunta. Una frase sobre lo que este registro no cubre.",
+      "highlights": ["Hecho concreto", "Otro hecho"]
+    },
+    "lectura": {
+      "title": "Cómo se lee el archivo",
+      "body": "Unidad, columnas y coordenadas. Una celda vacía no es cero, salvo que el archivo escriba el cero.",
+      "caveats": ["La unidad está o no está en el archivo.", "Los huecos no se rellenan."]
+    },
+    "uso": {
+      "title": "Para qué alcanza",
+      "body": "El uso declarado, con sus huecos.",
+      "answers": ["¿Qué se puede preguntar con este archivo?"],
+      "doesNotAnswer": ["¿Qué pregunta parece posible y este archivo no responde?"]
+    }
+  },
+  "files": [],
+  "preview": { "kind": "none" },
+  "related": []
+}

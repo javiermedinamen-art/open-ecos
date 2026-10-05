@@ -135,6 +135,7 @@ h2 { font-size: clamp(1.8rem, 3vw, 2.4rem); margin: 0 0 0.6rem; }
   cursor: pointer;
   color: var(--muted);
 }
+.cite-actions { display: flex; flex-wrap: wrap; gap: 0.45rem; }
 .copy {
   background: transparent;
   border: 1px solid var(--line);

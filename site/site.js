@@ -391,7 +391,11 @@ async function renderDataset(id, mode, token) {
       <p class="index">Cita</p>
       <h2>Cómo citarlo</h2>
       <textarea class="citation" id="citation" readonly>${esc(dataset.citation)}</textarea>
-      <p><button class="copy" type="button" id="copy">Copiar cita</button></p>
+      <p class="cite-actions">
+        <button class="copy" type="button" data-cite="text" data-label="Cita">Cita</button>
+        <button class="copy" type="button" data-cite="bib" data-label="BibTeX">BibTeX</button>
+        <button class="copy" type="button" data-cite="ris" data-label="RIS">RIS</button>
+      </p>
       <p class="chart-note">${esc(dataset.rights.attribution)}</p>
     </section>
   `;
@@ -400,7 +404,7 @@ async function renderDataset(id, mode, token) {
       ? `<a href="https://doi.org/${esc(dataset.doi)}">doi.org/${esc(dataset.doi)}</a>`
       : "Sin DOI";
     document.querySelector(".facts div:last-child strong").innerHTML = doiFact;
-    document.querySelector("#copy").addEventListener("click", copyCitation);
+    bindCitation(dataset);
   }
   if (dataset.preview && dataset.preview.kind && dataset.preview.kind !== "none") {
     mountViewer(
@@ -983,14 +987,69 @@ function formatNumber(value) {
   return Number(value).toLocaleString("es-CL", { maximumFractionDigits: 1 });
 }
 
-async function copyCitation() {
-  const text = document.querySelector("#citation").value;
-  try {
-    await navigator.clipboard.writeText(text);
-    document.querySelector("#copy").textContent = "Copiada";
-  } catch {
-    document.querySelector("#citation").select();
+function bindCitation(dataset) {
+  const box = document.querySelector("#citation");
+  document.querySelector(".cite-actions").addEventListener("click", async (event) => {
+    const button = event.target.closest("button");
+    if (!button) return;
+    const text = citationText(dataset, button.dataset.cite);
+    box.value = text;
+    box.focus();
+    box.select();
+    let copied = false;
+    try {
+      await navigator.clipboard.writeText(text);
+      copied = true;
+    } catch {
+      copied = document.execCommand("copy");
+    }
+    if (!copied) return;
+    for (const item of document.querySelectorAll(".cite-actions button")) item.textContent = item.dataset.label;
+    button.textContent = "Copiada";
+  });
+}
+
+function citationText(dataset, format) {
+  if (format === "bib") return bibtex(dataset);
+  if (format === "ris") return ris(dataset);
+  return dataset.citation;
+}
+
+function citeKey(dataset) {
+  const year = String(dataset.published || "").slice(0, 4);
+  const family = String(dataset.creators[0]?.name || "OpenEcosystems").split(",")[0].replace(/[^A-Za-z0-9]/g, "");
+  const slug = dataset.id.split("-").slice(0, 2).join("");
+  return `${family}${year}${slug}`;
+}
+
+function bibtex(dataset) {
+  const authors = dataset.creators.map((creator) => creator.name).join(" and ");
+  const year = String(dataset.published || "").slice(0, 4);
+  const fields = [
+    `  author = {${authors}}`,
+    `  title = {${dataset.title}}`,
+    `  year = {${year}}`,
+    `  version = {${dataset.version}}`,
+  ];
+  if (dataset.doi) {
+    fields.push(`  doi = {${dataset.doi}}`);
+    fields.push(`  url = {https://doi.org/${dataset.doi}}`);
   }
+  fields.push("  howpublished = {Open Ecosystems}");
+  return `@misc{${citeKey(dataset)},\n${fields.join(",\n")}\n}`;
+}
+
+function ris(dataset) {
+  const year = String(dataset.published || "").slice(0, 4);
+  const lines = ["TY  - DATA"];
+  for (const creator of dataset.creators) lines.push(`AU  - ${creator.name}`);
+  lines.push(`TI  - ${dataset.title}`, `PY  - ${year}`, `DA  - ${dataset.published}`, `VL  - ${dataset.version}`);
+  if (dataset.doi) {
+    lines.push(`DO  - ${dataset.doi}`);
+    lines.push(`UR  - https://doi.org/${dataset.doi}`);
+  }
+  lines.push("PB  - Open Ecosystems", "ER  - ");
+  return lines.join("\n");
 }
 
 async function fetchJson(url) {
