@@ -1,7 +1,7 @@
 {
   "id": "ejemplo-salar-huasco-temperatura",
   "title": "Temperatura de agua en el Salar de Huasco (ejemplo ficticio)",
-  "summary": "Conjunto de ejemplo para mostrar la forma de un dataset de Open Ecos. Describe una campaña de un día en tres puntos del Salar de Huasco. Las temperaturas son inventadas y no se pueden citar como medición.",
+  "summary": "Un ejemplo para mostrar cómo se publica un registro. Describe una visita de un día a tres puntos del Salar de Huasco. Las temperaturas son inventadas y no se pueden citar como medición.",
   "language": "es",
   "status": "example",
   "version": "1.0.0",
@@ -56,7 +56,7 @@
   "triptico": {
     "contexto": {
       "title": "Una visita, no la historia del salar",
-      "body": "El Salar de Huasco es un humedal altoandino. Una campaña de un día no describe su clima ni la salud del humedal: describe el agua en tres puntos durante esa visita. Este registro existe para fijar la forma de publicación. Los números no salen de un instrumento.",
+      "body": "El Salar de Huasco es un humedal altoandino. Una visita de un día no cuenta su clima ni cómo está el humedal: cuenta el agua en tres puntos durante esa visita. Este registro existe para fijar la forma de publicación. Los números no salen de un instrumento.",
       "highlights": [
         "Salar de Huasco",
         "Un día de campaña",
@@ -86,15 +86,15 @@
   },
   "divulgacion": {
     "title": "Una visita inventada al agua del salar",
-    "lede": "Tres puntos y un día, con números de mentira. Sirve para ver cómo se cuenta un dataset. No sirve para saber qué temperatura tenía el Salar de Huasco.",
+    "lede": "Tres puntos y un día, con números de mentira. Sirve para ver cómo se cuenta un registro. No dice qué temperatura tenía el Salar de Huasco.",
     "sections": [
       {
         "title": "Un número necesita un lugar",
-        "body": "Cada punto del mapa es una estación imaginaria. La temperatura es el promedio de dos lecturas de ese mismo día. Como el día y el instrumento no existieron, el mapa enseña la forma de una campaña, no el salar."
+        "body": "Cada punto del mapa es una estación imaginaria. La temperatura es el promedio de dos lecturas de ese mismo día. Como el día y el instrumento no existieron, el mapa muestra la forma de una visita, no el salar."
       },
       {
         "title": "Lo que parece una respuesta y no lo es",
-        "body": "Con tres puntos no se puede decir si el humedal se enfría o se seca. Para eso haría falta volver muchas veces, con un instrumento de verdad. Esta carpeta existe para que la ficha y la lectura se puedan probar."
+        "body": "Con tres puntos no se puede decir si el humedal se enfría o se seca. Para eso haría falta volver muchas veces, con un instrumento de verdad. Esta carpeta existe para probar la ficha y la lectura."
       }
     ],
     "limits": [

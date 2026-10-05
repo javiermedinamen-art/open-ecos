@@ -1,11 +1,11 @@
 {
   "formatVersion": 1,
-  "generatedAt": "2026-10-05T20:18:16+00:00",
+  "generatedAt": "2026-10-05T21:38:10+00:00",
   "datasets": [
     {
       "id": "ejemplo-salar-huasco-temperatura",
       "title": "Temperatura de agua en el Salar de Huasco (ejemplo ficticio)",
-      "summary": "Conjunto de ejemplo para mostrar la forma de un dataset de Open Ecos. Describe una campaña de un día en tres puntos del Salar de Huasco. Las temperaturas son inventadas y no se pueden citar como medición.",
+      "summary": "Un ejemplo para mostrar cómo se publica un registro. Describe una visita de un día a tres puntos del Salar de Huasco. Las temperaturas son inventadas y no se pueden citar como medición.",
       "status": "example",
       "language": "es",
       "license": "CC-BY-4.0",
@@ -41,7 +41,7 @@
     {
       "id": "profundidad-nieve-andes-sur-2010-2024",
       "title": "Profundidad de nieve diaria en los Andes del Sur (2010–2024)",
-      "summary": "Profundidad de nieve diaria en 69 estaciones automáticas de los Andes del Sur, entre 21° S y 54° S, de 2010 a 2024. Medina Mendoza y Caro publicaron la serie en Zenodo. Esta ficha dice cómo leer esos archivos y qué preguntas no alcanzan a responder.",
+      "summary": "La profundidad de la nieve, día a día, en 69 estaciones de los Andes del Sur, entre 21° S y 54° S, de 2010 a 2024. Medina Mendoza y Caro publicaron la serie en Zenodo. Esta ficha dice cómo leer esos archivos y qué no alcanzan a decir.",
       "status": "published",
       "language": "es",
       "license": "CC-BY-4.0",
@@ -72,7 +72,7 @@
       "path": "datasets/profundidad-nieve-andes-sur-2010-2024/dataset.json",
       "doi": "10.5281/zenodo.21577171",
       "hasReading": true,
-      "readingTitle": "Cuánta nieve había en el suelo, en 69 lugares de los Andes",
+      "readingTitle": "La nieve, anotada en 69 lugares de los Andes",
       "cover": "datasets/profundidad-nieve-andes-sur-2010-2024/media/un-punto.jpg"
     }
   ]

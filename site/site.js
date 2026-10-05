@@ -1,42 +1,238 @@
 const app = document.querySelector("#app");
-const state = { catalog: null, query: "", theme: "todos" };
+const state = {
+  catalog: null,
+  query: "",
+  theme: "todos",
+  lang: localStorage.getItem("open-ecos-lang") === "en" ? "en" : "es",
+};
 let renderToken = 0;
 let leafletPromise = null;
 let detachOverture = () => {};
 const seriesCache = new Map();
 
-const BEATS = [
-  {
-    kicker: "Inicio",
-    title: "Open Ecosystems",
-    body: "",
-  },
-  {
-    kicker: "De qué se trata",
-    title: "Un catálogo, no un depósito.",
-    body: "Cada registro llega con el archivo y con lo que el archivo calla: para qué sirve, cómo se lee y dónde se detiene. La lectura es para comprenderlo. La ficha, para citarlo.",
-  },
-  {
-    kicker: "Por qué existe",
-    title: "Lo medido en común permanece abierto.",
-    body: "La nieve, el agua de un humedal, la temperatura de un río. Esas series las sostienen redes comunes. Guardar el archivo, o cobrar por consultarlo, deja fuera a quien observa el lugar y a quien lo cuida. Aquí siguen a la vista, con su unidad y con su límite.",
-  },
-];
+function beats() {
+  if (state.lang === "en") {
+    return [
+      { kicker: "Home", title: "Open Ecosystems", body: "" },
+      {
+        kicker: "What it is",
+        title: "A catalog, not a repository.",
+        body: "Each record arrives with the file and with what the file leaves unsaid: what it is for, how to read it, and where it stops. The reading is for understanding it quietly. The sheet, for citing it.",
+      },
+      {
+        kicker: "Why it exists",
+        title: "The place that is measured is the place where one lives.",
+        body: "Snow at a station, the water of a wetland, the temperature of a river. Shared networks keep these series, and they speak of the same ground that gives water and harvest. To lock the file, or to charge for consulting it, puts that ground out of reach. Here it stays in view, with its unit and its limit.",
+      },
+    ];
+  }
+  return [
+    { kicker: "Inicio", title: "Open Ecosystems", body: "" },
+    {
+      kicker: "De qué se trata",
+      title: "Un catálogo, no un depósito.",
+      body: "Cada registro llega con el archivo y con lo que el archivo calla: para qué sirve, cómo se lee y dónde se detiene. La lectura es para comprenderlo con calma. La ficha, para citarlo.",
+    },
+    {
+      kicker: "Por qué existe",
+      title: "El lugar que se mide es el lugar donde se vive.",
+      body: "La nieve en una estación, el agua de un humedal, la temperatura de un río. Esas series las sostienen redes comunes, y hablan del mismo sitio que da de beber y de cosechar. Guardar el archivo, o cobrar por consultarlo, lo deja fuera de alcance. Aquí sigue a la vista, con su unidad y con su límite.",
+    },
+  ];
+}
 
-const STATUS = { published: "Publicado", example: "Ejemplo", draft: "Borrador" };
-const LABELS = {
-  code_internal: "Código",
-  name: "Nombre",
-  elevation: "Elevación",
-  basin: "Cuenca",
-  source: "Red",
-  sensor: "Sensor",
-  start_date: "Inicio",
-  end_date: "Fin",
-  coverage: "Cobertura publicada",
-  station_id: "Estación",
-  temp_c: "Temperatura",
+const COPY = {
+  es: {
+    skip: "Saltar al contenido",
+    catalog: "Catálogo",
+    langLabel: "Idioma",
+    colophon: "Los registros salen de <span class=\"mono\">catalog/index.json</span> y de la ficha de cada dataset. No hay una base de datos detrás de esta página.",
+    loading: "Cargando el catálogo…",
+    publishedOne: "publicado",
+    publishedMany: "publicados",
+    recordOne: "registro",
+    recordMany: "registros",
+    coverage: "cobertura del catálogo",
+    search: "Buscar por lugar, tema o título",
+    all: "Todos",
+    empty: "Ningún dataset coincide con ese filtro.",
+    reading: "Lectura",
+    sheet: "Ficha",
+    back: "← Catálogo",
+    missing: "Ese dataset no está en el catálogo.",
+    place: "Lugar",
+    period: "Periodo",
+    license: "Licencia",
+    noDoi: "Sin DOI",
+    technical: "Ficha técnica",
+    made: "Cómo está hecho",
+    instruments: "Instrumentos",
+    unstated: "No indicados",
+    crsOriginal: "CRS de origen",
+    crsPublished: "CRS publicado",
+    extent: "Extensión",
+    preparation: "Preparación",
+    variables: "Variables",
+    wideTable: "tabla ancha, índice {column}",
+    files: "Archivos",
+    download: "Qué se puede descargar",
+    cite: "Cita",
+    howCite: "Cómo citarlo",
+    copy: "Copiar cita",
+    copied: "Copiada",
+    notSay: "Esto no lo dice",
+    sameData: "Los mismos datos",
+    look: "Míralo",
+    sheetLink: "La ficha",
+    sheetNote: " tiene unidades, métodos y la cita.",
+    chooseReading: "Elige una estación. Un hueco en la línea es un día sin medición, no un día en cero.",
+    chooseSheet: "Elige una estación. La serie diaria se lee entonces, no antes.",
+    filterPoints: "Filtrar puntos",
+    readingSeries: "Leyendo la serie de esta estación…",
+    noColumn: "Esta estación no tiene una columna en la tabla ancha.",
+    previewPoints: "Puntos del archivo de vista previa",
+    chosen: "Punto elegido",
+    unitOf: "Unidad de",
+    point: "Punto",
+    noSeries: "No se pudo leer la serie.",
+    noTime: "La columna de tiempo no está en el archivo.",
+    noMap: "No se pudo cargar el mapa.",
+    noCatalog: "No se pudo leer el catálogo. Abre el sitio desde un servidor estático, no como archivo local.",
+    notFound: "No se encontró",
+    answers: "Responde",
+    doesNot: "No responde",
+    readingKind: "Tipo de lectura",
+    part: "Parte",
+    down: "Baja",
+    days: "días con valor",
+    minimum: "mínimo",
+    maximum: "máximo",
+    publishedCoverage: "cobertura publicada",
+    noNumbers: "no tiene valores numéricos.",
+    statusPublished: "Publicado",
+    statusExample: "Ejemplo",
+    statusDraft: "Borrador",
+    code: "Código",
+    name: "Nombre",
+    elevation: "Elevación",
+    basin: "Cuenca",
+    network: "Red",
+    sensor: "Sensor",
+    start: "Inicio",
+    end: "Fin",
+    station: "Estación",
+    temperature: "Temperatura",
+    from: "De",
+    to: "a",
+  },
+  en: {
+    skip: "Skip to content",
+    catalog: "Catalog",
+    langLabel: "Language",
+    colophon: "Records come from <span class=\"mono\">catalog/index.json</span> and from each dataset sheet. There is no database behind this page.",
+    loading: "Loading the catalog…",
+    publishedOne: "published",
+    publishedMany: "published",
+    recordOne: "record",
+    recordMany: "records",
+    coverage: "catalog coverage",
+    search: "Search by place, theme, or title",
+    all: "All",
+    empty: "No dataset matches that filter.",
+    reading: "Reading",
+    sheet: "Sheet",
+    back: "← Catalog",
+    missing: "That dataset is not in the catalog.",
+    place: "Place",
+    period: "Period",
+    license: "License",
+    noDoi: "No DOI",
+    technical: "Technical sheet",
+    made: "How it was made",
+    instruments: "Instruments",
+    unstated: "Not stated",
+    crsOriginal: "Source CRS",
+    crsPublished: "Published CRS",
+    extent: "Extent",
+    preparation: "Preparation",
+    variables: "Variables",
+    wideTable: "wide table, index {column}",
+    files: "Files",
+    download: "What can be downloaded",
+    cite: "Citation",
+    howCite: "How to cite it",
+    copy: "Copy citation",
+    copied: "Copied",
+    notSay: "This does not say",
+    sameData: "The same data",
+    look: "Look",
+    sheetLink: "The sheet",
+    sheetNote: " has the units, the methods, and the citation.",
+    chooseReading: "Choose a station. A gap in the line is a day without a measurement, not a day at zero.",
+    chooseSheet: "Choose a station. The daily series is read then, not before.",
+    filterPoints: "Filter points",
+    readingSeries: "Reading this station’s series…",
+    noColumn: "This station has no column in the wide table.",
+    previewPoints: "Points from the preview file",
+    chosen: "Chosen point",
+    unitOf: "Unit of",
+    point: "Point",
+    noSeries: "The series could not be read.",
+    noTime: "The time column is not in the file.",
+    noMap: "The map could not be loaded.",
+    noCatalog: "The catalog could not be read. Open the site from a static server, not as a local file.",
+    notFound: "Not found",
+    answers: "It answers",
+    doesNot: "It does not answer",
+    readingKind: "Kind of reading",
+    part: "Part",
+    down: "Scroll",
+    days: "days with a value",
+    minimum: "minimum",
+    maximum: "maximum",
+    publishedCoverage: "published coverage",
+    noNumbers: "has no numeric values.",
+    statusPublished: "Published",
+    statusExample: "Example",
+    statusDraft: "Draft",
+    code: "Code",
+    name: "Name",
+    elevation: "Elevation",
+    basin: "Basin",
+    network: "Network",
+    sensor: "Sensor",
+    start: "Start",
+    end: "End",
+    station: "Station",
+    temperature: "Temperature",
+    from: "From",
+    to: "to",
+  },
 };
+
+function t(key) {
+  return (COPY[state.lang] && COPY[state.lang][key]) || COPY.es[key] || key;
+}
+
+function statusLabel(status) {
+  return { published: t("statusPublished"), example: t("statusExample"), draft: t("statusDraft") }[status] || status;
+}
+
+function fieldLabel(key) {
+  return {
+    code_internal: t("code"),
+    name: t("name"),
+    elevation: t("elevation"),
+    basin: t("basin"),
+    source: t("network"),
+    sensor: t("sensor"),
+    start_date: t("start"),
+    end_date: t("end"),
+    coverage: t("publishedCoverage"),
+    station_id: t("station"),
+    temp_c: t("temperature"),
+  }[key] || key.replaceAll("_", " ");
+}
 
 if ("scrollRestoration" in history) history.scrollRestoration = "manual";
 window.addEventListener("hashchange", render);
@@ -126,7 +322,7 @@ function paintRows() {
 function entryHtml(item) {
   const badge = item.status === "published"
     ? ""
-    : `<span class="badge ${esc(item.status)}">${esc(STATUS[item.status] || item.status)}</span>`;
+    : `<span class="badge ${esc(item.status)}">${esc(statusLabel(item.status))}</span>`;
   return `
     <a class="entry" href="#/dataset/${esc(item.id)}">
       <div>
@@ -154,7 +350,7 @@ async function renderDataset(id, mode, token) {
     : `
     <p><a class="back" href="#/">← Catálogo</a></p>
     ${modeSwitch(dataset, false)}
-    <p class="kicker">${esc(STATUS[dataset.status] || dataset.status)} · v${esc(dataset.version)}</p>
+    <p class="kicker">${esc(statusLabel(dataset.status))} · v${esc(dataset.version)}</p>
     <h1>${esc(dataset.title)}</h1>
     <p class="summary">${esc(dataset.summary)}</p>
     ${lead ? figureHtml(lead) : ""}
@@ -235,12 +431,12 @@ function readingDocument(dataset) {
     <p class="lede">${esc(reading.lede)}</p>
     ${sections}
     <section class="limits">
-      <h2>Esto no lo dice</h2>
+      <h2>Lo que no dice</h2>
       <ul>${reading.limits.map((item) => `<li>${esc(item)}</li>`).join("")}</ul>
     </section>
     <section class="panel-block">
-      <p class="index">Los mismos datos</p>
-      <h2>Míralo</h2>
+      <p class="index">El mismo archivo</p>
+      <h2>Para mirarlo</h2>
       <div id="viewer"></div>
       <div id="chart"></div>
       <p class="chart-note"><a href="#/dataset/${encodeURIComponent(dataset.id)}/ficha">La ficha</a> tiene unidades, métodos y la cita.</p>
@@ -261,8 +457,9 @@ function modeSwitch(dataset, reading) {
 }
 
 function overtureHtml() {
-  const marks = BEATS.map((_, index) => `<button type="button" data-beat="${index}" aria-label="Parte ${index + 1}"></button>`).join("");
-  const beats = BEATS.map((beat, index) => `
+  const list = beats();
+  const marks = list.map((_, index) => `<button type="button" data-beat="${index}" aria-label="Parte ${index + 1}"></button>`).join("");
+  const beatHtml = list.map((beat, index) => `
     <article class="beat" data-beat="${index}">
       <p class="kicker">${esc(beat.kicker)}</p>
       <h1>${esc(beat.title)}</h1>
@@ -272,7 +469,7 @@ function overtureHtml() {
   return `
     <section class="overture" id="overture">
       <div class="overture-pin">
-        <div class="overture-stage">${beats}</div>
+        <div class="overture-stage">${beatHtml}</div>
         <div class="overture-marks">${marks}</div>
       </div>
     </section>
@@ -683,7 +880,7 @@ function selectedHtml(feature, dataset) {
   const props = feature.properties || {};
   const rows = Object.entries(props)
     .filter(([key]) => key !== "name")
-    .map(([key, value]) => [LABELS[key] || key.replaceAll("_", " "), value]);
+    .map(([key, value]) => [fieldLabel(key), value]);
   const variable = dataset.variables.find((item) => item.column && props[item.column] != null);
   if (variable) rows.unshift(["Unidad de " + variable.name, variable.unit]);
   return `<section class="panel-block"><p class="index">Punto elegido</p><h2>${esc(featureLabel(props))}</h2>${sheetHtml(rows)}</section>`;
@@ -799,7 +996,7 @@ async function copyCitation() {
 async function fetchJson(url) {
   let response;
   try {
-    response = await fetch(url);
+    response = await fetch(url, { cache: "no-store" });
   } catch {
     throw new Error("No se pudo leer el catálogo. Abre el sitio desde un servidor estático, no como archivo local.");
   }

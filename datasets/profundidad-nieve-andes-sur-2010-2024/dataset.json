@@ -1,7 +1,7 @@
 {
   "id": "profundidad-nieve-andes-sur-2010-2024",
   "title": "Profundidad de nieve diaria en los Andes del Sur (2010–2024)",
-  "summary": "Profundidad de nieve diaria en 69 estaciones automáticas de los Andes del Sur, entre 21° S y 54° S, de 2010 a 2024. Medina Mendoza y Caro publicaron la serie en Zenodo. Esta ficha dice cómo leer esos archivos y qué preguntas no alcanzan a responder.",
+  "summary": "La profundidad de la nieve, día a día, en 69 estaciones de los Andes del Sur, entre 21° S y 54° S, de 2010 a 2024. Medina Mendoza y Caro publicaron la serie en Zenodo. Esta ficha dice cómo leer esos archivos y qué no alcanzan a decir.",
   "language": "es",
   "status": "published",
   "version": "4.2.0",
@@ -70,7 +70,7 @@
   "triptico": {
     "contexto": {
       "title": "Una red de estaciones, no un mapa de nieve",
-      "body": "La serie mide la profundidad de nieve en 69 estaciones automáticas de los Andes del Sur, desde el altiplano hasta Magallanes, entre junio de 2010 y diciembre de 2024. Las redes de origen son DGA, CEAZA, IANIGLA y CIEP, en Chile y Argentina. Medina Mendoza y Caro las reunieron, les aplicaron un control de calidad y publicaron el depósito en Zenodo. Esta ficha no vuelve a medir: explica cómo está armado el archivo.",
+      "body": "La serie anota la profundidad de nieve en 69 estaciones de los Andes del Sur, del altiplano a Magallanes, entre junio de 2010 y diciembre de 2024. Las redes son DGA, CEAZA, IANIGLA y CIEP, en Chile y Argentina. Medina Mendoza y Caro las reunieron, revisaron la calidad y publicaron el depósito en Zenodo. Esta ficha no vuelve a medir. Dice cómo está armado el archivo.",
       "highlights": [
         "69 estaciones automáticas",
         "Paso diario, 2010–2024",
@@ -90,7 +90,7 @@
     },
     "uso": {
       "title": "La serie de una estación, no el clima de los Andes",
-      "body": "Alcanza para consultar una estación, para usarla en una modelación hidrológica o para contrastar un producto satelital: ese es el uso que declaran los autores. Cada consulta tiene que cargar con los huecos y con el cambio de sensor. La cita es el DOI de Zenodo. La ilustración de esta ficha es una imagen editorial y no es la Figura 1 del depósito.",
+      "body": "Sirve para consultar una estación, para una modelación hidrológica o para contrastar un producto satelital: así lo declaran los autores. Cada consulta carga con los huecos y con el cambio de sensor. La cita es el DOI de Zenodo. La ilustración de esta ficha es editorial y no es la Figura 1 del depósito.",
       "answers": [
         "¿Qué profundidad registró una de estas 69 estaciones en un día con dato?",
         "¿Dónde está cada estación, a qué altura y de qué red proviene?"
@@ -103,30 +103,30 @@
     }
   },
   "divulgacion": {
-    "title": "Cuánta nieve había en el suelo, en 69 lugares de los Andes",
-    "lede": "Cada día, durante quince años, unas estaciones automáticas midieron la altura de la nieve justo donde están paradas. No es un mapa de toda la cordillera. Es la historia de esos puntos.",
+    "title": "La nieve, anotada en 69 lugares de los Andes",
+    "lede": "Durante quince años, unas estaciones anotaron la altura de la nieve en el punto donde están. No es la cordillera entera. Es la memoria de esos lugares, de los que más abajo depende el agua.",
     "sections": [
       {
-        "title": "La nieve se mide en un punto",
-        "body": "Imagina una regla puesta en la nieve. El número de ese día dice cuántos centímetros había bajo el sensor, en ese lugar y no en el valle de al lado. Por eso el mapa muestra estaciones, no una mancha blanca sobre Chile y Argentina.",
+        "title": "La nieve se anota en un punto",
+        "body": "Como una regla puesta en la nieve. El número de ese día dice cuántos centímetros había bajo el sensor, ahí, y no en el valle de al lado. El mapa muestra estaciones, no una mancha blanca sobre Chile y Argentina.",
         "image": "media/un-punto.jpg",
-        "caption": "Una estación mide su punto. El resto de la cordillera, ese día, no está en el archivo. Es una ilustración, no una foto del dataset."
+        "caption": "Una estación anota su punto. El resto de la cordillera, ese día, no está en el archivo. Es una ilustración, no una foto del dataset."
       },
       {
         "title": "Un aparato mira hacia abajo",
-        "body": "Casi todas estas estaciones tienen un brazo de metal y un sensor que mide la distancia hasta la superficie de la nieve. Cuando el aparato cambia, la serie sigue, pero ya no es exactamente el mismo instrumento. En la ficha eso figura como el paso de un Campbell SR50A a un Lufft SHM31.",
+        "body": "Casi todas estas estaciones tienen un brazo de metal y un sensor que mira la distancia hasta la nieve. Si el aparato cambia, la serie sigue, pero ya no es el mismo instrumento. En la ficha eso aparece como el paso de un Campbell SR50A a un Lufft SHM31.",
         "image": "media/sensor-nieve.jpg",
         "caption": "Ilustración de cómo mira el sensor. No es una foto de una estación del archivo."
       },
       {
         "title": "Un día vacío no es un día sin nieve",
-        "body": "Si la celda está vacía, ese día no hubo medición. Si dice 0, el registro es cero. En verano muchos lugares quedan en cero porque la nieve se fue. En invierno el número sube. Cien centímetros, leídos así, llegan cerca de la altura de una mesa: sirve para imaginar la unidad, no es un resultado de este archivo. El archivo mismo no escribe la unidad."
+        "body": "Si la celda está vacía, ese día no hubo medición. Si dice 0, el registro es cero. En verano muchos lugares quedan en cero porque la nieve se fue. En invierno el número sube. Cien centímetros, leídos así, llegan cerca de la altura de una mesa: sirve para imaginar la unidad. El archivo no la escribe."
       }
     ],
     "limits": [
       "No dice cuánta nieve hay donde no hay estación.",
-      "No dice si los Andes tienen menos nieve que antes. Sirve para estudiar eso, y no es la respuesta.",
-      "No dice cuánta agua hay dentro de esa nieve."
+      "No dice si los Andes tienen menos nieve que antes. Sirve para mirar eso, y no es la respuesta.",
+      "No dice cuánta agua guarda esa nieve."
     ]
   },
   "files": [
