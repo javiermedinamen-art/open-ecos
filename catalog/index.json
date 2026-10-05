@@ -1,0 +1,79 @@
+{
+  "formatVersion": 1,
+  "generatedAt": "2026-10-05T20:18:16+00:00",
+  "datasets": [
+    {
+      "id": "ejemplo-salar-huasco-temperatura",
+      "title": "Temperatura de agua en el Salar de Huasco (ejemplo ficticio)",
+      "summary": "Conjunto de ejemplo para mostrar la forma de un dataset de Open Ecos. Describe una campaña de un día en tres puntos del Salar de Huasco. Las temperaturas son inventadas y no se pueden citar como medición.",
+      "status": "example",
+      "language": "es",
+      "license": "CC-BY-4.0",
+      "themes": [
+        "humedales",
+        "temperatura",
+        "agua"
+      ],
+      "place": "Salar de Huasco, Región de Tarapacá, Chile",
+      "country": [
+        "CL"
+      ],
+      "bbox": [
+        -68.9,
+        -20.35,
+        -68.8,
+        -20.25
+      ],
+      "temporal": {
+        "start": "2024-03-02",
+        "end": "2024-03-02",
+        "resolution": "horas"
+      },
+      "version": "1.0.0",
+      "updated": "2026-10-05",
+      "previewKind": "map-points",
+      "path": "datasets/ejemplo-salar-huasco-temperatura/dataset.json",
+      "doi": null,
+      "hasReading": true,
+      "readingTitle": "Una visita inventada al agua del salar",
+      "cover": null
+    },
+    {
+      "id": "profundidad-nieve-andes-sur-2010-2024",
+      "title": "Profundidad de nieve diaria en los Andes del Sur (2010–2024)",
+      "summary": "Profundidad de nieve diaria en 69 estaciones automáticas de los Andes del Sur, entre 21° S y 54° S, de 2010 a 2024. Medina Mendoza y Caro publicaron la serie en Zenodo. Esta ficha dice cómo leer esos archivos y qué preguntas no alcanzan a responder.",
+      "status": "published",
+      "language": "es",
+      "license": "CC-BY-4.0",
+      "themes": [
+        "nieve",
+        "clima",
+        "agua"
+      ],
+      "place": "Andes del Sur, Chile y Argentina",
+      "country": [
+        "AR",
+        "CL"
+      ],
+      "bbox": [
+        -73.75,
+        -53.78,
+        -67.69,
+        -21.14
+      ],
+      "temporal": {
+        "start": "2010-06-11",
+        "end": "2024-12-31",
+        "resolution": "días"
+      },
+      "version": "4.2.0",
+      "updated": "2026-07-25",
+      "previewKind": "map-points",
+      "path": "datasets/profundidad-nieve-andes-sur-2010-2024/dataset.json",
+      "doi": "10.5281/zenodo.21577171",
+      "hasReading": true,
+      "readingTitle": "Cuánta nieve había en el suelo, en 69 lugares de los Andes",
+      "cover": "datasets/profundidad-nieve-andes-sur-2010-2024/media/un-punto.jpg"
+    }
+  ]
+}

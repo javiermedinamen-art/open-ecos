@@ -1,0 +1,41 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "station_id": "HU-01",
+        "name": "Laguna norte",
+        "temp_c": 9.8
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-68.853, -20.274]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_id": "HU-02",
+        "name": "Borde este",
+        "temp_c": 6.7
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-68.821, -20.301]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station_id": "HU-03",
+        "name": "Vega sur",
+        "temp_c": 5.9
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-68.874, -20.328]
+      }
+    }
+  ]
+}

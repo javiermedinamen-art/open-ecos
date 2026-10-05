@@ -1,0 +1,127 @@
+{
+  "id": "ejemplo-salar-huasco-temperatura",
+  "title": "Temperatura de agua en el Salar de Huasco (ejemplo ficticio)",
+  "summary": "Conjunto de ejemplo para mostrar la forma de un dataset de Open Ecos. Describe una campaña de un día en tres puntos del Salar de Huasco. Las temperaturas son inventadas y no se pueden citar como medición.",
+  "language": "es",
+  "status": "example",
+  "version": "1.0.0",
+  "published": "2026-10-05",
+  "updated": "2026-10-05",
+  "citation": "Open Ecos (2026). Temperatura de agua en el Salar de Huasco (ejemplo ficticio). Versión 1.0.0. Datos inventados, no citar como medición.",
+  "themes": ["humedales", "temperatura", "agua"],
+  "spatial": {
+    "place": "Salar de Huasco, Región de Tarapacá, Chile",
+    "country": ["CL"],
+    "bbox": [-68.9, -20.35, -68.8, -20.25],
+    "crs": "EPSG:4326"
+  },
+  "temporal": {
+    "start": "2024-03-02",
+    "end": "2024-03-02",
+    "resolution": "horas"
+  },
+  "creators": [
+    {
+      "name": "Open Ecos",
+      "affiliation": "Ejemplo de estructura"
+    }
+  ],
+  "rights": {
+    "license": "CC-BY-4.0",
+    "attribution": "Open Ecos. Ejemplo con datos ficticios: no citar como medición de terreno.",
+    "derivedFrom": null
+  },
+  "provenance": {
+    "origin": "ejemplo",
+    "sourceName": "Datos inventados para demostrar el contrato de publicación",
+    "sourceUrl": null,
+    "preparedBy": "Open Ecos",
+    "preparationNote": "No hay ingesta automática. Una actualización real consiste en editar esta carpeta a mano y volver a generar el catálogo."
+  },
+  "methods": {
+    "summary": "Tres puntos imaginarios visitados el mismo día. Cada punto tiene dos lecturas de temperatura del agua. El mapa muestra el promedio de esas dos lecturas.",
+    "instruments": ["Ninguno: los valores son ficticios"],
+    "crsOriginal": "EPSG:4326",
+    "processing": "No hubo reproyección. En un dataset real, methods.crsOriginal guarda el CRS de captura y esta nota explica el paso a EPSG:4326."
+  },
+  "variables": [
+    {
+      "id": "temp_c",
+      "name": "Temperatura del agua",
+      "unit": "°C",
+      "description": "Temperatura puntual del agua. En el GeoJSON es el promedio de las filas del CSV para esa estación.",
+      "column": "temp_c"
+    }
+  ],
+  "triptico": {
+    "contexto": {
+      "title": "Una visita, no la historia del salar",
+      "body": "El Salar de Huasco es un humedal altoandino. Una campaña de un día no describe su clima ni la salud del humedal: describe el agua en tres puntos durante esa visita. Este registro existe para fijar la forma de publicación. Los números no salen de un instrumento.",
+      "highlights": [
+        "Salar de Huasco",
+        "Un día de campaña",
+        "Datos ficticios"
+      ]
+    },
+    "lectura": {
+      "title": "Cómo leer los números",
+      "body": "temp_c está en grados Celsius. En el CSV, cada fila es una lectura de una estación. En el GeoJSON, cada punto es una estación y temp_c es el promedio de sus dos lecturas. Las coordenadas son longitud y latitud en EPSG:4326. Un archivo real que llegue en UTM se convierte antes de entrar aquí, y el CRS de origen queda escrito en métodos.",
+      "caveats": [
+        "Los valores son inventados. No describen el salar.",
+        "No hay instrumento, calibración ni protocolo de campo.",
+        "Un día y tres puntos no alcanzan para hablar de tendencia."
+      ]
+    },
+    "uso": {
+      "title": "Para qué sirve y para qué no",
+      "body": "Sirve para ver cómo se publica una campaña corta: ficha, unidades, mapa liviano y límites explícitos. Cuando haya una campaña real, se reemplaza esta carpeta o se crea otra. No se actualiza sola.",
+      "answers": [
+        "¿Cómo se entrega una campaña puntual con estaciones y lecturas?"
+      ],
+      "doesNotAnswer": [
+        "¿El Salar de Huasco se está enfriando o secando?",
+        "¿Qué temperatura tenía el agua ese día?"
+      ]
+    }
+  },
+  "divulgacion": {
+    "title": "Una visita inventada al agua del salar",
+    "lede": "Tres puntos y un día, con números de mentira. Sirve para ver cómo se cuenta un dataset. No sirve para saber qué temperatura tenía el Salar de Huasco.",
+    "sections": [
+      {
+        "title": "Un número necesita un lugar",
+        "body": "Cada punto del mapa es una estación imaginaria. La temperatura es el promedio de dos lecturas de ese mismo día. Como el día y el instrumento no existieron, el mapa enseña la forma de una campaña, no el salar."
+      },
+      {
+        "title": "Lo que parece una respuesta y no lo es",
+        "body": "Con tres puntos no se puede decir si el humedal se enfría o se seca. Para eso haría falta volver muchas veces, con un instrumento de verdad. Esta carpeta existe para que la ficha y la lectura se puedan probar."
+      }
+    ],
+    "limits": [
+      "Los valores son inventados. No describen el agua del salar.",
+      "Un día y tres puntos no alcanzan para hablar de una tendencia."
+    ]
+  },
+  "files": [
+    {
+      "role": "preview",
+      "title": "Estaciones de la campaña",
+      "path": "data/estaciones.geojson",
+      "mediaType": "application/geo+json",
+      "description": "Un punto por estación. temp_c es el promedio de las lecturas del CSV."
+    },
+    {
+      "role": "table",
+      "title": "Lecturas de temperatura",
+      "path": "data/temperatura.csv",
+      "mediaType": "text/csv",
+      "description": "Dos lecturas ficticias por estación, el 2 de marzo de 2024."
+    }
+  ],
+  "preview": {
+    "kind": "map-points",
+    "file": "data/estaciones.geojson",
+    "valueField": "temp_c"
+  },
+  "related": []
+}

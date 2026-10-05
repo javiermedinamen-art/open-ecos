@@ -1,0 +1,403 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://open-ecos.local/schema/dataset.schema.json",
+  "title": "Dataset de Open Ecos",
+  "description": "Contrato de un dataset curado. El tríptico es obligatorio: sin contexto, lectura y límites de uso, el dataset no se publica.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "title",
+    "summary",
+    "language",
+    "status",
+    "version",
+    "published",
+    "updated",
+    "citation",
+    "themes",
+    "spatial",
+    "temporal",
+    "creators",
+    "rights",
+    "provenance",
+    "methods",
+    "variables",
+    "triptico",
+    "files",
+    "preview",
+    "related"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Igual al nombre de la carpeta. Minúsculas, números y guiones.",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "minLength": 3,
+      "maxLength": 80
+    },
+    "title": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 160
+    },
+    "summary": {
+      "type": "string",
+      "description": "Un párrafo. Debe decir qué es el dataset y, si los datos no son reales, decirlo aquí.",
+      "minLength": 80,
+      "maxLength": 600
+    },
+    "language": {
+      "type": "string",
+      "enum": ["es", "en"]
+    },
+    "status": {
+      "description": "example no es ciencia citable. published es el único estado que el sitio debería tratar como fuente.",
+      "type": "string",
+      "enum": ["draft", "published", "example"]
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "published": {
+      "type": "string",
+      "format": "date"
+    },
+    "updated": {
+      "type": "string",
+      "format": "date"
+    },
+    "citation": {
+      "type": "string",
+      "description": "Texto listo para copiar. Incluye versión.",
+      "minLength": 40,
+      "maxLength": 500
+    },
+    "doi": {
+      "description": "DOI de la versión citada, cuando el dataset tiene uno.",
+      "type": "string",
+      "pattern": "^10\\..+"
+    },
+    "themes": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 6,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 3,
+        "maxLength": 40
+      }
+    },
+    "spatial": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["place", "country", "bbox", "crs"],
+      "properties": {
+        "place": { "type": "string", "minLength": 3, "maxLength": 160 },
+        "country": {
+          "description": "Uno o más códigos ISO 3166-1 alfa-2. Un dataset puede cruzar una frontera.",
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[A-Z]{2}$" }
+        },
+        "bbox": {
+          "description": "Oeste, sur, este, norte, en EPSG:4326.",
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": { "type": "number" }
+        },
+        "crs": {
+          "description": "El bbox publicado siempre va en WGS84. El CRS de origen va en methods.crsOriginal.",
+          "const": "EPSG:4326"
+        }
+      }
+    },
+    "temporal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["start", "end", "resolution"],
+      "properties": {
+        "start": { "type": "string", "format": "date" },
+        "end": { "type": "string", "format": "date" },
+        "resolution": {
+          "type": "string",
+          "description": "En lenguaje claro: horas, días, campaña, años.",
+          "minLength": 3,
+          "maxLength": 40
+        }
+      }
+    },
+    "creators": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name"],
+        "properties": {
+          "name": { "type": "string", "minLength": 3, "maxLength": 120 },
+          "affiliation": { "type": "string", "minLength": 2, "maxLength": 160 }
+        }
+      }
+    },
+    "rights": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["license", "attribution", "derivedFrom"],
+      "properties": {
+        "license": {
+          "type": "string",
+          "description": "Identificador SPDX cuando exista (CC-BY-4.0, CC0-1.0). Si la licencia de origen no tiene SPDX, nombrarla y explicarla en attribution.",
+          "minLength": 3,
+          "maxLength": 80
+        },
+        "attribution": { "type": "string", "minLength": 10, "maxLength": 400 },
+        "derivedFrom": {
+          "description": "Obligatorio cuando el dataset republica o transforma datos de otra institución. null si el levantamiento es propio.",
+          "type": ["object", "null"],
+          "additionalProperties": false,
+          "required": ["name", "url"],
+          "properties": {
+            "name": { "type": "string", "minLength": 3, "maxLength": 200 },
+            "url": { "type": "string", "format": "uri" },
+            "license": { "type": "string", "minLength": 3, "maxLength": 80 }
+          }
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["origin", "sourceName", "sourceUrl", "preparedBy", "preparationNote"],
+      "properties": {
+        "origin": {
+          "type": "string",
+          "enum": ["campana-propia", "institucion", "republicacion", "ejemplo", "otro"]
+        },
+        "sourceName": { "type": "string", "minLength": 3, "maxLength": 200 },
+        "sourceUrl": { "type": ["string", "null"], "format": "uri" },
+        "preparedBy": { "type": "string", "minLength": 3, "maxLength": 120 },
+        "preparationNote": {
+          "type": "string",
+          "description": "Qué se hizo a mano: unidades, CRS, filas descartadas. No hay ingesta automática.",
+          "minLength": 20,
+          "maxLength": 800
+        }
+      }
+    },
+    "methods": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["summary", "instruments", "crsOriginal", "processing"],
+      "properties": {
+        "summary": { "type": "string", "minLength": 20, "maxLength": 800 },
+        "instruments": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 2, "maxLength": 120 }
+        },
+        "crsOriginal": {
+          "type": "string",
+          "description": "CRS en que se capturó el dato, antes de pasarlo a EPSG:4326. Usar desconocido si no se puede saber, y repetirlo en las advertencias.",
+          "minLength": 3,
+          "maxLength": 40
+        },
+        "processing": { "type": "string", "minLength": 20, "maxLength": 800 }
+      }
+    },
+    "variables": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "name", "unit", "description"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "minLength": 2,
+            "maxLength": 40
+          },
+          "name": { "type": "string", "minLength": 3, "maxLength": 80 },
+          "unit": {
+            "type": "string",
+            "description": "Unidad explícita. Usar 1 si es adimensional.",
+            "minLength": 1,
+            "maxLength": 40
+          },
+          "description": { "type": "string", "minLength": 10, "maxLength": 400 },
+          "column": {
+            "type": "string",
+            "description": "Nombre de la columna del CSV o de la propiedad GeoJSON. Tiene que existir en algún archivo local. Se omite cuando la variable usa layout wide.",
+            "pattern": "^[A-Za-z][A-Za-z0-9_]*$"
+          },
+          "layout": {
+            "description": "Tabla ancha: una columna índice (el tiempo) y el resto de las columnas son las series, aunque su nombre sea un código numérico.",
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["type", "file", "indexColumn"],
+            "properties": {
+              "type": { "const": "wide" },
+              "file": { "type": "string", "minLength": 3 },
+              "indexColumn": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_]*$"
+              }
+            }
+          }
+        }
+      }
+    },
+    "divulgacion": {
+      "description": "Lectura en lenguaje llano del mismo dataset. No reemplaza al tríptico y no puede omitir los límites.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title", "lede", "sections", "limits"],
+      "properties": {
+        "title": { "type": "string", "minLength": 10, "maxLength": 120 },
+        "lede": { "type": "string", "minLength": 40, "maxLength": 500 },
+        "sections": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 6,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["title", "body"],
+            "properties": {
+              "title": { "type": "string", "minLength": 3, "maxLength": 90 },
+              "body": { "type": "string", "minLength": 40, "maxLength": 900 },
+              "image": { "type": "string", "minLength": 3 },
+              "caption": { "type": "string", "minLength": 10, "maxLength": 240 }
+            }
+          }
+        },
+        "limits": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 5,
+          "items": { "type": "string", "minLength": 10, "maxLength": 220 }
+        }
+      }
+    },
+    "triptico": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contexto", "lectura", "uso"],
+      "properties": {
+        "contexto": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["title", "body", "highlights"],
+          "properties": {
+            "title": { "type": "string", "minLength": 5, "maxLength": 80 },
+            "body": { "type": "string", "minLength": 80, "maxLength": 2000 },
+            "highlights": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 4,
+              "items": { "type": "string", "minLength": 3, "maxLength": 80 }
+            }
+          }
+        },
+        "lectura": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["title", "body", "caveats"],
+          "properties": {
+            "title": { "type": "string", "minLength": 5, "maxLength": 80 },
+            "body": { "type": "string", "minLength": 80, "maxLength": 2000 },
+            "caveats": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 8,
+              "items": { "type": "string", "minLength": 10, "maxLength": 240 }
+            }
+          }
+        },
+        "uso": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["title", "body", "answers", "doesNotAnswer"],
+          "properties": {
+            "title": { "type": "string", "minLength": 5, "maxLength": 80 },
+            "body": { "type": "string", "minLength": 80, "maxLength": 2000 },
+            "answers": {
+              "description": "Preguntas que este dataset sí puede responder.",
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 5,
+              "items": { "type": "string", "minLength": 10, "maxLength": 200 }
+            },
+            "doesNotAnswer": {
+              "description": "Preguntas que parece responder y no responde. Este campo es parte del producto.",
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 5,
+              "items": { "type": "string", "minLength": 10, "maxLength": 200 }
+            }
+          }
+        }
+      }
+    },
+    "files": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["role", "title", "mediaType", "description"],
+        "properties": {
+          "role": {
+            "type": "string",
+            "enum": ["preview", "table", "figure", "archive"]
+          },
+          "title": { "type": "string", "minLength": 3, "maxLength": 120 },
+          "mediaType": { "type": "string", "minLength": 3, "maxLength": 80 },
+          "description": { "type": "string", "minLength": 10, "maxLength": 400 },
+          "path": {
+            "description": "Ruta relativa a la carpeta del dataset. Obligatoria en preview, table y figure. Prohibida en archive.",
+            "type": "string",
+            "minLength": 3
+          },
+          "url": {
+            "description": "Ubicación del archivo pesado, normalmente un registro de Zenodo. Obligatoria en archive.",
+            "type": "string",
+            "format": "uri"
+          },
+          "doi": { "type": "string", "pattern": "^10\\..+" },
+          "note": { "type": "string", "minLength": 3, "maxLength": 300 }
+        }
+      }
+    },
+    "preview": {
+      "description": "Pista para el futuro visor. Si el kind no se reconoce, el sitio muestra el tríptico y la lista de archivos, sin inventar un gráfico.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind"],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": ["map-points", "map-polygons", "time-series", "table", "none"]
+        },
+        "file": { "type": "string", "minLength": 3 },
+        "timeField": { "type": "string", "minLength": 1 },
+        "valueField": { "type": "string", "minLength": 1 },
+        "seriesField": { "type": "string", "minLength": 1 }
+      }
+    },
+    "related": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+      }
+    }
+  }
+}

@@ -1,0 +1,190 @@
+{
+  "id": "profundidad-nieve-andes-sur-2010-2024",
+  "title": "Profundidad de nieve diaria en los Andes del Sur (2010–2024)",
+  "summary": "Profundidad de nieve diaria en 69 estaciones automáticas de los Andes del Sur, entre 21° S y 54° S, de 2010 a 2024. Medina Mendoza y Caro publicaron la serie en Zenodo. Esta ficha dice cómo leer esos archivos y qué preguntas no alcanzan a responder.",
+  "language": "es",
+  "status": "published",
+  "version": "4.2.0",
+  "published": "2026-07-25",
+  "updated": "2026-07-25",
+  "doi": "10.5281/zenodo.21577171",
+  "citation": "Medina Mendoza, J. y Caro, A. (2026). The Southern Andes Daily Snow Depth Dataset (2010–2024): Quality-Controlled Dataset from Chile and Argentina (v4.2). Zenodo. https://doi.org/10.5281/zenodo.21577171",
+  "themes": ["nieve", "clima", "agua"],
+  "spatial": {
+    "place": "Andes del Sur, Chile y Argentina",
+    "country": ["AR", "CL"],
+    "bbox": [-73.75, -53.78, -67.69, -21.14],
+    "crs": "EPSG:4326"
+  },
+  "temporal": {
+    "start": "2010-06-11",
+    "end": "2024-12-31",
+    "resolution": "días"
+  },
+  "creators": [
+    { "name": "Medina Mendoza, Javier" },
+    { "name": "Caro, Alexis" }
+  ],
+  "rights": {
+    "license": "CC-BY-4.0",
+    "attribution": "Medina Mendoza, Javier y Caro, Alexis (2026), CC-BY-4.0, https://doi.org/10.5281/zenodo.21577171",
+    "derivedFrom": {
+      "name": "The Southern Andes Daily Snow Depth Dataset (2010–2024), Zenodo v4",
+      "url": "https://doi.org/10.5281/zenodo.21577171",
+      "license": "CC-BY-4.0"
+    }
+  },
+  "provenance": {
+    "origin": "republicacion",
+    "sourceName": "Medina Mendoza y Caro, Zenodo 10.5281/zenodo.21577171",
+    "sourceUrl": "https://doi.org/10.5281/zenodo.21577171",
+    "preparedBy": "Open Ecos",
+    "preparationNote": "Se copiaron los dos CSV del depósito sin cambiar sus valores, y se comprobó el MD5 publicado por Zenodo. Cada code_internal del metadato es una columna de la serie. El GeoJSON solo reordena ese metadato: coordenadas en [lon, lat], nombres sin espacios de más y fechas en AAAA-MM-DD. No se reejecutó el control de calidad. La Figura 1 queda enlazada porque pesa 18 MB."
+  },
+  "methods": {
+    "summary": "69 estaciones de DGA, CEAZA, IANIGLA y CIEP. Los autores describen un control de calidad de cuatro etapas que incluye corrección de línea base, eliminación de picos anómalos y validación de consistencia física.",
+    "instruments": ["Campbell SR50A", "Lufft SHM31"],
+    "crsOriginal": "desconocido",
+    "processing": "Open Ecos no transformó la serie diaria. El mapa muestra la red de estaciones, no la nieve. La unidad no viene en el encabezado y se anota cm por la magnitud de los valores."
+  },
+  "variables": [
+    {
+      "id": "snow_depth",
+      "name": "Profundidad de nieve",
+      "unit": "cm",
+      "description": "Valor diario en la tabla ancha. Cada columna distinta de date es una estación. El archivo no nombra la unidad; los valores de invierno coinciden con centímetros.",
+      "layout": {
+        "type": "wide",
+        "file": "data/Southern_Andes_Snow_Depth_Dataset_v4.2.csv",
+        "indexColumn": "date"
+      }
+    },
+    {
+      "id": "elevation",
+      "name": "Elevación de la estación",
+      "unit": "m",
+      "description": "Altura publicada en el metadato de estaciones. El encabezado no dice la unidad; las magnitudes coinciden con metros sobre el nivel del mar.",
+      "column": "elevation"
+    }
+  ],
+  "triptico": {
+    "contexto": {
+      "title": "Una red de estaciones, no un mapa de nieve",
+      "body": "La serie mide la profundidad de nieve en 69 estaciones automáticas de los Andes del Sur, desde el altiplano hasta Magallanes, entre junio de 2010 y diciembre de 2024. Las redes de origen son DGA, CEAZA, IANIGLA y CIEP, en Chile y Argentina. Medina Mendoza y Caro las reunieron, les aplicaron un control de calidad y publicaron el depósito en Zenodo. Esta ficha no vuelve a medir: explica cómo está armado el archivo.",
+      "highlights": [
+        "69 estaciones automáticas",
+        "Paso diario, 2010–2024",
+        "Chile y Argentina"
+      ]
+    },
+    "lectura": {
+      "title": "Tabla ancha, celda vacía no es cero",
+      "body": "En el CSV diario la primera columna es date, en formato AAAA-MM-DD. Cada columna siguiente es una estación y su encabezado es el code_internal del metadato: un número o un nombre. La celda es la profundidad de ese día. Vacía significa sin dato; 0.00 es un cero escrito. El encabezado no trae unidad. En invierno los valores van de decenas a unos pocos cientos y en verano caen cerca de cero, así que aquí se leen como centímetros, sin convertirlos. El mapa no pinta la nieve: ubica las estaciones. La elevación sale del otro CSV y tampoco declara unidad; se lee como metros.",
+      "caveats": [
+        "La unidad de la nieve no está escrita en el archivo. Se lee como cm por la magnitud, no porque el depósito lo diga.",
+        "La cobertura es desigual: Portezuelo Ibáñez figura con el 100 % de su periodo y Glaciar Snoring con cerca del 16 %.",
+        "Varias estaciones DGA reemplazaron el sensor Campbell SR50A por un Lufft SHM31.",
+        "Zenodo describe un control de cuatro etapas. Esta ficha no lo reejecutó y el depósito no incluye el informe de métodos.",
+        "Las coordenadas se usaron como latitud y longitud en grados. El archivo no indica el CRS."
+      ]
+    },
+    "uso": {
+      "title": "La serie de una estación, no el clima de los Andes",
+      "body": "Alcanza para consultar una estación, para usarla en una modelación hidrológica o para contrastar un producto satelital: ese es el uso que declaran los autores. Cada consulta tiene que cargar con los huecos y con el cambio de sensor. La cita es el DOI de Zenodo. La ilustración de esta ficha es una imagen editorial y no es la Figura 1 del depósito.",
+      "answers": [
+        "¿Qué profundidad registró una de estas 69 estaciones en un día con dato?",
+        "¿Dónde está cada estación, a qué altura y de qué red proviene?"
+      ],
+      "doesNotAnswer": [
+        "¿Cuánta nieve hay en un punto de los Andes sin estación?",
+        "¿El manto nival de los Andes está disminuyendo? Esta tabla es la materia prima, no esa conclusión.",
+        "¿Cuál es el equivalente de agua de esa nieve?"
+      ]
+    }
+  },
+  "divulgacion": {
+    "title": "Cuánta nieve había en el suelo, en 69 lugares de los Andes",
+    "lede": "Cada día, durante quince años, unas estaciones automáticas midieron la altura de la nieve justo donde están paradas. No es un mapa de toda la cordillera. Es la historia de esos puntos.",
+    "sections": [
+      {
+        "title": "La nieve se mide en un punto",
+        "body": "Imagina una regla puesta en la nieve. El número de ese día dice cuántos centímetros había bajo el sensor, en ese lugar y no en el valle de al lado. Por eso el mapa muestra estaciones, no una mancha blanca sobre Chile y Argentina.",
+        "image": "media/un-punto.jpg",
+        "caption": "Una estación mide su punto. El resto de la cordillera, ese día, no está en el archivo. Es una ilustración, no una foto del dataset."
+      },
+      {
+        "title": "Un aparato mira hacia abajo",
+        "body": "Casi todas estas estaciones tienen un brazo de metal y un sensor que mide la distancia hasta la superficie de la nieve. Cuando el aparato cambia, la serie sigue, pero ya no es exactamente el mismo instrumento. En la ficha eso figura como el paso de un Campbell SR50A a un Lufft SHM31.",
+        "image": "media/sensor-nieve.jpg",
+        "caption": "Ilustración de cómo mira el sensor. No es una foto de una estación del archivo."
+      },
+      {
+        "title": "Un día vacío no es un día sin nieve",
+        "body": "Si la celda está vacía, ese día no hubo medición. Si dice 0, el registro es cero. En verano muchos lugares quedan en cero porque la nieve se fue. En invierno el número sube. Cien centímetros, leídos así, llegan cerca de la altura de una mesa: sirve para imaginar la unidad, no es un resultado de este archivo. El archivo mismo no escribe la unidad."
+      }
+    ],
+    "limits": [
+      "No dice cuánta nieve hay donde no hay estación.",
+      "No dice si los Andes tienen menos nieve que antes. Sirve para estudiar eso, y no es la respuesta.",
+      "No dice cuánta agua hay dentro de esa nieve."
+    ]
+  },
+  "files": [
+    {
+      "role": "preview",
+      "title": "Red de estaciones",
+      "path": "data/estaciones.geojson",
+      "mediaType": "application/geo+json",
+      "description": "Un punto por estación, armado desde el CSV de metadatos. No contiene la serie de nieve."
+    },
+    {
+      "role": "table",
+      "title": "Serie diaria de profundidad de nieve",
+      "path": "data/Southern_Andes_Snow_Depth_Dataset_v4.2.csv",
+      "mediaType": "text/csv",
+      "description": "Copia del CSV v4.2 de Zenodo. Tabla ancha: date y una columna por estación."
+    },
+    {
+      "role": "table",
+      "title": "Metadatos de las estaciones",
+      "path": "data/Station_metadata_for_snow_depth_observations.csv",
+      "mediaType": "text/csv",
+      "description": "Copia del CSV de metadatos de Zenodo: código, nombre, coordenadas, elevación, red y sensor."
+    },
+    {
+      "role": "figure",
+      "title": "Un punto no es la cordillera",
+      "path": "media/un-punto.jpg",
+      "mediaType": "image/jpeg",
+      "description": "Ilustración para la lectura general: una estación frente a la cordillera. No es una medición."
+    },
+    {
+      "role": "figure",
+      "title": "El sensor mira la nieve",
+      "path": "media/sensor-nieve.jpg",
+      "mediaType": "image/jpeg",
+      "description": "Ilustración para la lectura general de cómo un sensor mide hacia el suelo. No es una foto de campo."
+    },
+    {
+      "role": "figure",
+      "title": "Ilustración de los Andes del Sur en invierno",
+      "path": "media/ilustracion.jpg",
+      "mediaType": "image/jpeg",
+      "description": "Ilustración editorial generada para esta ficha. No es una medición ni la Figura 1 del depósito."
+    },
+    {
+      "role": "archive",
+      "title": "Figura 1 del depósito de Zenodo",
+      "mediaType": "image/png",
+      "description": "Figura original de los autores. Pesa 18 MB y permanece en Zenodo.",
+      "url": "https://zenodo.org/records/21577171/files/Figure_1.png",
+      "doi": "10.5281/zenodo.21577171"
+    }
+  ],
+  "preview": {
+    "kind": "map-points",
+    "file": "data/estaciones.geojson",
+    "valueField": "elevation"
+  },
+  "related": []
+}

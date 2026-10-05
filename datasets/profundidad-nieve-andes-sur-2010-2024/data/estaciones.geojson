@@ -1,0 +1,1454 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "2000002",
+        "name": "Volcán Auncanquilcha",
+        "elevation": 5087.0,
+        "basin": "Fronterizas Salar Michincha - R. Loa",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2021-12-01",
+        "end_date": "2024-12-31",
+        "coverage": "1062 (94%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -68.4528,
+          -21.1906
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "2400002",
+        "name": "Cerro Chajnantor Cumbre",
+        "elevation": 5625.0,
+        "basin": "Endorreica entre Fronterizas y Salar Atacama",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2022-03-01",
+        "end_date": "2024-12-31",
+        "coverage": "622 (60%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -67.7422,
+          -22.9872
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "3031002",
+        "name": "Volcán Ojos del Salado bajo Refugio Atacama",
+        "elevation": 5201.0,
+        "basin": "Endorreicas entre Frontera y Vertiente",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2023-01-03",
+        "end_date": "2024-12-31",
+        "coverage": "481 (66%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -68.535,
+          -27.0519
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "3031003",
+        "name": "Volcán Ojos del Salado en Refugio Tejos",
+        "elevation": 5804.0,
+        "basin": "Endorreicas entre Frontera y Vertiente",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2023-01-03",
+        "end_date": "2024-12-31",
+        "coverage": "592 (81%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -68.5378,
+          -27.0869
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "3413001",
+        "name": "Glaciar Maranceles",
+        "elevation": 3985.0,
+        "basin": "Río Copiapo",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2022-04-19",
+        "end_date": "2024-12-31",
+        "coverage": "975 (99%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -69.7236,
+          -28.4572
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "4300004",
+        "name": "Glaciar Tapado en Los Corrales",
+        "elevation": 4065.0,
+        "basin": "Río Elqui",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2019-10-31",
+        "end_date": "2024-12-31",
+        "coverage": "1744 (92%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -69.8829,
+          -30.1554
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "430004",
+        "name": "Tapado (TPF)",
+        "elevation": 4306.0,
+        "basin": "Río Elqui",
+        "source": "CEAZA",
+        "sensor": "Lufft/SHM31",
+        "start_date": "2018-03-21",
+        "end_date": "2023-10-25",
+        "coverage": "1844 (90%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -69.9084,
+          -30.1584
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "430014",
+        "name": "Los Corrales",
+        "elevation": 3982.0,
+        "basin": "Río Elqui",
+        "source": "CEAZA",
+        "sensor": "Campbell/SR50A",
+        "start_date": "2020-09-30",
+        "end_date": "2023-01-30",
+        "coverage": "337 (40%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -69.8759,
+          -30.1615
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "Capayan",
+        "name": "Capayán",
+        "elevation": 4754.0,
+        "basin": "Río Jáchal",
+        "source": "IANIGLA",
+        "sensor": "Campbell/SR50A",
+        "start_date": "2016-12-20",
+        "end_date": "2024-12-31",
+        "coverage": "2889 (98%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -69.8038,
+          -30.1734
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "430009",
+        "name": "La Laguna",
+        "elevation": 3209.0,
+        "basin": "Río Elqui",
+        "source": "CEAZA",
+        "sensor": "Campbell/SR50A",
+        "start_date": "2015-06-01",
+        "end_date": "2024-12-31",
+        "coverage": "2579 (74%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.0371,
+          -30.2032
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "430012",
+        "name": "Llano de Las Liebres",
+        "elevation": 3565.0,
+        "basin": "Río Elqui",
+        "source": "CEAZA",
+        "sensor": "Campbell/SR50A",
+        "start_date": "2017-05-16",
+        "end_date": "2021-07-31",
+        "coverage": "1096 (71%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -69.9345,
+          -30.2542
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "4300001",
+        "name": "Cerro Olivares",
+        "elevation": 3566.0,
+        "basin": "Río Elqui",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2020-12-23",
+        "end_date": "2024-12-31",
+        "coverage": "735 (50%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -69.9355,
+          -30.2567
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "430003",
+        "name": "El Jote",
+        "elevation": 3660.0,
+        "basin": "Río Elqui",
+        "source": "CEAZA",
+        "sensor": "Campbell/SR50A",
+        "start_date": "2019-04-02",
+        "end_date": "2024-12-31",
+        "coverage": "2057 (98%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.2795,
+          -30.4053
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "4520006",
+        "name": "Quebrada Larga Cota 3500",
+        "elevation": 3550.0,
+        "basin": "Río Limarí",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2015-03-07",
+        "end_date": "2024-12-31",
+        "coverage": "3373 (94%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.2918,
+          -30.7252
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "4511004",
+        "name": "Cerro Vega Negra",
+        "elevation": 3529.0,
+        "basin": "Río Limarí",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2016-01-01",
+        "end_date": "2024-10-30",
+        "coverage": "1536 (48%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.5165,
+          -30.9059
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "450001",
+        "name": "Tascadero",
+        "elevation": 3427.0,
+        "basin": "Río Limarí",
+        "source": "CEAZA",
+        "sensor": "Campbell/SR50A",
+        "start_date": "2020-02-19",
+        "end_date": "2024-12-31",
+        "coverage": "1282 (72%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.5399,
+          -31.2628
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "470001",
+        "name": "Casa del Canto",
+        "elevation": 3570.0,
+        "basin": "Río Choapa",
+        "source": "CEAZA",
+        "sensor": "Campbell/SR50A",
+        "start_date": "2019-03-14",
+        "end_date": "2024-12-31",
+        "coverage": "2093 (99%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.589,
+          -31.4173
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "4700002",
+        "name": "El Soldado",
+        "elevation": 3293.0,
+        "basin": "Río Choapa",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2015-06-08",
+        "end_date": "2024-12-31",
+        "coverage": "3100 (89%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.3213,
+          -32.0066
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "5100003",
+        "name": "Nacimiento Del Sobrante",
+        "elevation": 3143.0,
+        "basin": "Río Petorca",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2017-01-01",
+        "end_date": "2024-12-31",
+        "coverage": "2636 (90%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.4829,
+          -32.1889
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "Cuevas",
+        "name": "Las Cuevas",
+        "elevation": 3197.0,
+        "basin": "Río Mendoza",
+        "source": "IANIGLA",
+        "sensor": "Campbell/SR50A",
+        "start_date": "2018-01-03",
+        "end_date": "2024-12-31",
+        "coverage": "2541 (99%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.053,
+          -32.813
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "5401007",
+        "name": "Portillo",
+        "elevation": 3032.0,
+        "basin": "Río Aconcagua",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2013-04-24",
+        "end_date": "2024-12-31",
+        "coverage": "3747 (88%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.097,
+          -32.8424
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "5400005",
+        "name": "Glaciar León Negro",
+        "elevation": 4350.0,
+        "basin": "Río Aconcagua",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2019-10-31",
+        "end_date": "2024-12-31",
+        "coverage": "848 (45%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.0283,
+          -32.9936
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "Portillo",
+        "name": "Portillo Argentino",
+        "elevation": 3890.0,
+        "basin": "Río Mendoza",
+        "source": "IANIGLA",
+        "sensor": "Campbell/SR50A",
+        "start_date": "2019-10-31",
+        "end_date": "2022-12-31",
+        "coverage": "1076 (93%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -69.5888,
+          -33.6222
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "5706004",
+        "name": "Glaciar Juncal Sur",
+        "elevation": 4035.0,
+        "basin": "Río Maipo",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2019-01-18",
+        "end_date": "2024-12-31",
+        "coverage": "2115 (97%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.1119,
+          -33.1175
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "5706002",
+        "name": "Glaciar Olivares Gamma",
+        "elevation": 3628.0,
+        "basin": "Río Maipo",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2014-05-18",
+        "end_date": "2024-12-31",
+        "coverage": "3597 (93%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.1528,
+          -33.1564
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "5706005",
+        "name": "Glaciar Olivares Alfa",
+        "elevation": 4230.0,
+        "basin": "Río Maipo",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2019-03-26",
+        "end_date": "2024-12-31",
+        "coverage": "1951 (93%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.2181,
+          -33.1786
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "5706003",
+        "name": "Valle Olivares",
+        "elevation": 2786.0,
+        "basin": "Río Maipo",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2015-01-02",
+        "end_date": "2024-12-31",
+        "coverage": "2794 (77%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.1141,
+          -33.191
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "5721019",
+        "name": "La Parva",
+        "elevation": 2703.0,
+        "basin": "Río Maipo",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2021-07-20",
+        "end_date": "2024-12-30",
+        "coverage": "1236 (98%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.2972,
+          -33.3306
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "5720005",
+        "name": "Farellones",
+        "elevation": 2452.0,
+        "basin": "Río Maipo",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2023-11-07",
+        "end_date": "2024-12-31",
+        "coverage": "416 (99%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.3128,
+          -33.3517
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "5705004",
+        "name": "Glaciar Tupungatito Bajo",
+        "elevation": 4425.0,
+        "basin": "Río Maipo",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2019-10-31",
+        "end_date": "2024-12-31",
+        "coverage": "1344 (71%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -69.8381,
+          -33.3858
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "5703013",
+        "name": "Portezuelo Glaciar Echaurren Norte",
+        "elevation": 3847.0,
+        "basin": "Río Maipo",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2019-10-31",
+        "end_date": "2024-12-31",
+        "coverage": "467 (25%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.1289,
+          -33.5764
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "5703012",
+        "name": "Valle Echaurren Norte",
+        "elevation": 2950.0,
+        "basin": "Río Maipo",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2023-01-01",
+        "end_date": "2024-11-14",
+        "coverage": "676 (99%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.1103,
+          -33.5939
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "5703014",
+        "name": "Termas Del Plomo",
+        "elevation": 3027.0,
+        "basin": "Río Maipo",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2017-03-06",
+        "end_date": "2022-12-31",
+        "coverage": "1790 (84%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -69.9058,
+          -33.6133
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "5703009",
+        "name": "Laguna Negra",
+        "elevation": 2785.0,
+        "basin": "Río Maipo",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2013-04-10",
+        "end_date": "2024-12-31",
+        "coverage": "3841 (90%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.1077,
+          -33.6659
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "5701010",
+        "name": "Las Melosas Ruta de Nieve",
+        "elevation": 3317.0,
+        "basin": "Río Maipo",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2017-01-01",
+        "end_date": "2024-12-31",
+        "coverage": "2507 (86%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.2727,
+          -33.8636
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "5701011",
+        "name": "Las Hualtatas",
+        "elevation": 2020.0,
+        "basin": "Río Maipo",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2019-10-31",
+        "end_date": "2024-12-31",
+        "coverage": "1314 (70%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.1089,
+          -34.0677
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "6005005",
+        "name": "Codelco Cerro Teniente",
+        "elevation": 2950.0,
+        "basin": "Río Rapel",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2024-05-31",
+        "end_date": "2024-12-31",
+        "coverage": "210 (98%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.2692,
+          -34.2047
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "6000004",
+        "name": "Laguna El Yeso",
+        "elevation": 2140.0,
+        "basin": "Río Rapel",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2016-01-01",
+        "end_date": "2024-12-31",
+        "coverage": "1980 (60%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.2084,
+          -34.4118
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "6013008",
+        "name": "Laguna Los Cristales",
+        "elevation": 2357.0,
+        "basin": "Río Rapel",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2013-03-09",
+        "end_date": "2020-09-30",
+        "coverage": "1285 (47%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.5097,
+          -34.5611
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "6001000",
+        "name": "Glaciar Cortaderal",
+        "elevation": 3156.0,
+        "basin": "Río Rapel",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2018-05-31",
+        "end_date": "2023-08-31",
+        "coverage": "1827 (95%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.2561,
+          -34.6608
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "6023000",
+        "name": "Glaciar Universidad en Río San Andrés",
+        "elevation": 2436.0,
+        "basin": "Río Rapel",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2020-09-30",
+        "end_date": "2024-12-31",
+        "coverage": "708 (46%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.3592,
+          -34.7186
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "6021002",
+        "name": "Cerro Los Guzmanes",
+        "elevation": 3125.0,
+        "basin": "Río Rapel",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2024-04-19",
+        "end_date": "2024-12-31",
+        "coverage": "249 (97%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.4636,
+          -34.8861
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "6020001",
+        "name": "Termas Del Flaco",
+        "elevation": 2665.0,
+        "basin": "Río Rapel",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2013-04-09",
+        "end_date": "2024-12-31",
+        "coverage": "3407 (80%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.33,
+          -34.893
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "7100006",
+        "name": "Paso Vergara",
+        "elevation": 2602.0,
+        "basin": "Río Mataquito",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2016-02-18",
+        "end_date": "2024-12-31",
+        "coverage": "2147 (66%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.5114,
+          -35.1948
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "Toqui",
+        "name": "Toqui Lautaro",
+        "elevation": 2453.0,
+        "basin": "Río Lautaro",
+        "source": "IANIGLA",
+        "sensor": "Campbell/SR50A",
+        "start_date": "2017-01-01",
+        "end_date": "2024-10-23",
+        "coverage": "2527 (89%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.5163,
+          -35.2928
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "7301000",
+        "name": "Lo Aguirre",
+        "elevation": 1989.0,
+        "basin": "Río Maule",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2010-06-11",
+        "end_date": "2024-12-31",
+        "coverage": "3883 (73%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.5721,
+          -35.9713
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "7301002",
+        "name": "NUEVA LO AGUIRRE",
+        "elevation": 1997.0,
+        "basin": "Río Maule",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2019-10-31",
+        "end_date": "2024-12-31",
+        "coverage": "1288 (68%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.5718,
+          -35.9723
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "7301001",
+        "name": "Los Condores",
+        "elevation": 2439.0,
+        "basin": "Río Maule",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2015-01-02",
+        "end_date": "2024-12-31",
+        "coverage": "2537 (69%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -70.5478,
+          -36.0097
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "7350008",
+        "name": "Nevado Longavi",
+        "elevation": 1977.0,
+        "basin": "Río Maule",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2011-03-01",
+        "end_date": "2024-12-31",
+        "coverage": "2931 (58%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.1435,
+          -36.2344
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "8130009",
+        "name": "Nevado Chillan",
+        "elevation": 2546.0,
+        "basin": "Río Itata",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2022-05-02",
+        "end_date": "2024-12-30",
+        "coverage": "491 (50%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.416,
+          -36.8473
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "8374001",
+        "name": "Volcan Chillan",
+        "elevation": 2078.0,
+        "basin": "Río Biobio",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2016-03-04",
+        "end_date": "2024-12-31",
+        "coverage": "3103 (96%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.4116,
+          -36.8939
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "8372001",
+        "name": "Alto Mallines",
+        "elevation": 1784.0,
+        "basin": "Río Biobio",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2016-01-02",
+        "end_date": "2024-12-31",
+        "coverage": "3191 (97%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.243,
+          -37.1578
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "8370010",
+        "name": "Los Corralitos",
+        "elevation": 1785.0,
+        "basin": "Río Biobio",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2019-10-31",
+        "end_date": "2024-12-31",
+        "coverage": "422 (22%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.1575,
+          -37.5772
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "8308003",
+        "name": "Chenqueco",
+        "elevation": 778.0,
+        "basin": "Río Biobio",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2024-01-02",
+        "end_date": "2024-12-31",
+        "coverage": "354 (97%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.3547,
+          -38.0647
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "8301001",
+        "name": "Liucura",
+        "elevation": 1034.0,
+        "basin": "Río Biobio",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2022-01-02",
+        "end_date": "2022-12-31",
+        "coverage": "357 (98%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.0907,
+          -38.6449
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "10105003",
+        "name": "Volcán Villarrica Pichillancahue",
+        "elevation": 1800.0,
+        "basin": "Río Valdivia",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2021-12-13",
+        "end_date": "2023-11-10",
+        "coverage": "385 (55%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.8758,
+          -39.435
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "10110003",
+        "name": "Complejo Volcánico Mocho Choshuenco",
+        "elevation": 1565.0,
+        "basin": "Río Valdivia",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2024-04-25",
+        "end_date": "2024-12-31",
+        "coverage": "207 (82%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.0586,
+          -39.9514
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "10321001",
+        "name": "Cardenal Samore",
+        "elevation": 920.0,
+        "basin": "Río Bueno",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2023-04-14",
+        "end_date": "2024-12-31",
+        "coverage": "592 (94%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.9864,
+          -40.6831
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "10710004",
+        "name": "Cuesta Moraga",
+        "elevation": 575.0,
+        "basin": "Río Yelcho",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2024-04-26",
+        "end_date": "2024-12-31",
+        "coverage": "247 (99%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.399,
+          -43.336
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "1130001",
+        "name": "Cerro Divisadero",
+        "elevation": 1430.0,
+        "basin": "Río Aysén",
+        "source": "CIEP",
+        "sensor": "Campbell/SR50A",
+        "start_date": "2020-09-30",
+        "end_date": "2024-12-31",
+        "coverage": "468 (30%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.0134,
+          -45.6165
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "11314002",
+        "name": "Cerro Divisadero en el Fraile",
+        "elevation": 1190.0,
+        "basin": "Río Aysén",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2019-12-31",
+        "end_date": "2024-12-31",
+        "coverage": "1055 (58%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.004,
+          -45.627
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "11503002",
+        "name": "Portezuelo Ibañez",
+        "elevation": 1080.0,
+        "basin": "Río Baker",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2022-07-07",
+        "end_date": "2024-12-31",
+        "coverage": "906 (100%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.051,
+          -46.0778
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "11440001",
+        "name": "Hielo Norte en Glaciar San Rafael",
+        "elevation": 1187.0,
+        "basin": "Costeras e Islas R. Aisen R. Baker C. Gral. Martinez",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2021-03-13",
+        "end_date": "2024-12-31",
+        "coverage": "1149 (83%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.5936,
+          -46.7053
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "1150003",
+        "name": "Steffen",
+        "elevation": 30.0,
+        "basin": "Río Baker",
+        "source": "CIEP",
+        "sensor": "Campbell/SR50A",
+        "start_date": "2022-01-01",
+        "end_date": "2022-10-09",
+        "coverage": "240 (85%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.6958,
+          -47.5555
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "Epulef",
+        "name": "Epulef",
+        "elevation": 898.0,
+        "basin": "Río Santa Cruz",
+        "source": "IANIGLA",
+        "sensor": "Campbell/SR50A",
+        "start_date": "2016-01-31",
+        "end_date": "2023-12-31",
+        "coverage": "1575 (54%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.9505,
+          -49.0523
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "Aonikenk",
+        "name": "Aonikenk",
+        "elevation": 1233.0,
+        "basin": "Río Santa Cruz",
+        "source": "IANIGLA",
+        "sensor": "Campbell/SR50A",
+        "start_date": "2014-03-30",
+        "end_date": "2024-11-10",
+        "coverage": "3074 (79%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.9975,
+          -49.2774
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "Chalten",
+        "name": "Chalten",
+        "elevation": 400.0,
+        "basin": "Río Santa Cruz",
+        "source": "IANIGLA",
+        "sensor": "Campbell/SR50A",
+        "start_date": "2019-10-31",
+        "end_date": "2024-12-31",
+        "coverage": "1056 (56%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.8844,
+          -49.3381
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "Tumbado",
+        "name": "Pliegue Tumbado",
+        "elevation": 1070.0,
+        "basin": "Río Santa Cruz",
+        "source": "IANIGLA",
+        "sensor": "Campbell/SR50A",
+        "start_date": "2020-03-27",
+        "end_date": "2022-12-31",
+        "coverage": "953 (94%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.9368,
+          -49.3793
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_internal": "12730001",
+        "name": "Glaciar Snoring",
+        "elevation": 70.0,
+        "basin": "Islas al sur Estrecho de Magallanes",
+        "source": "DGA",
+        "sensor": "Campbell/SR50A was replaced by Lufft/SHM31",
+        "start_date": "2019-10-31",
+        "end_date": "2024-10-14",
+        "coverage": "286 (16%)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -72.608,
+          -53.723
+        ]
+      }
+    }
+  ]
+}

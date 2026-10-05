@@ -1,0 +1,8 @@
+raw/
+__pycache__/
+*.pyc
+*.tif
+*.tiff
+*.las
+*.laz
+.DS_Store
