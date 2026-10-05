@@ -8,7 +8,7 @@ const seriesCache = new Map();
 const BEATS = [
   {
     kicker: "Inicio",
-    title: "Open Ecos",
+    title: "Open Ecosystems",
     body: "",
   },
   {
@@ -68,7 +68,7 @@ async function render() {
 
 function renderCatalog() {
   const data = state.catalog.datasets;
-  document.title = "Open Ecos";
+  document.title = "Open Ecosystems";
   const themes = [...new Set(data.flatMap((item) => item.themes))].sort();
   const published = data.filter((item) => item.status === "published").length;
   const span = yearSpan(data);
@@ -143,7 +143,7 @@ async function renderDataset(id, mode, token) {
   if (!entry) throw new Error("Ese dataset no está en el catálogo.");
   const dataset = await fetchJson(entry.path);
   if (token !== renderToken) return;
-  document.title = `${dataset.title} — Open Ecos`;
+  document.title = `${dataset.title} — Open Ecosystems`;
   const figures = dataset.files.filter((file) => file.role === "figure" && file.path);
   const wide = dataset.variables.find((variable) => variable.layout && variable.layout.type === "wide");
   const reading = Boolean(dataset.divulgacion) && mode !== "ficha";
