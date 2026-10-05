@@ -38,12 +38,18 @@ const LABELS = {
   temp_c: "Temperatura",
 };
 
+if ("scrollRestoration" in history) history.scrollRestoration = "manual";
 window.addEventListener("hashchange", render);
 render();
+
+function scrollToStart() {
+  window.scrollTo(0, 0);
+}
 
 async function render() {
   detachOverture();
   detachOverture = () => {};
+  scrollToStart();
   const token = ++renderToken;
   const route = routeFromHash();
   try {
@@ -51,9 +57,12 @@ async function render() {
     if (token !== renderToken) return;
     if (route) await renderDataset(route.id, route.mode, token);
     else renderCatalog();
+    scrollToStart();
+    requestAnimationFrame(scrollToStart);
   } catch (error) {
     if (token !== renderToken) return;
     app.innerHTML = `<p class="status-line">${esc(error.message)}</p>`;
+    scrollToStart();
   }
 }
 
