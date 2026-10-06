@@ -45,8 +45,10 @@ const COPY = {
   es: {
     skip: "Saltar al contenido",
     catalog: "Catálogo",
+    propose: "Proponer",
+    proposeLine: "Un registro nuevo empieza por aquí.",
     langLabel: "Idioma",
-    colophon: "Los registros salen de <span class=\"mono\">catalog/index.json</span> y de la ficha de cada dataset. No hay una base de datos detrás de esta página.",
+    colophon: "Los registros están en <span class=\"mono\">catalog/index.json</span> y en la ficha de cada dataset. Detrás de esta página no hay una base de datos.",
     loading: "Cargando el catálogo…",
     publishedOne: "publicado",
     publishedMany: "publicados",
@@ -80,9 +82,11 @@ const COPY = {
     howCite: "Cómo citarlo",
     copy: "Copiar cita",
     copied: "Copiada",
-    notSay: "Esto no lo dice",
-    sameData: "Los mismos datos",
-    look: "Míralo",
+    notSay: "Lo que no dice",
+    sameData: "El mismo archivo",
+    look: "Para mirarlo",
+    publication: "Publicación",
+    thePublication: "La publicación",
     sheetLink: "La ficha",
     sheetNote: " tiene unidades, métodos y la cita.",
     chooseReading: "Elige una estación. Un hueco en la línea es un día sin medición, no un día en cero.",
@@ -128,8 +132,10 @@ const COPY = {
   en: {
     skip: "Skip to content",
     catalog: "Catalog",
+    propose: "Propose",
+    proposeLine: "A new record starts here.",
     langLabel: "Language",
-    colophon: "Records come from <span class=\"mono\">catalog/index.json</span> and from each dataset sheet. There is no database behind this page.",
+    colophon: "Records are in <span class=\"mono\">catalog/index.json</span> and in each dataset sheet. There is no database behind this page.",
     loading: "Loading the catalog…",
     publishedOne: "published",
     publishedMany: "published",
@@ -163,9 +169,11 @@ const COPY = {
     howCite: "How to cite it",
     copy: "Copy citation",
     copied: "Copied",
-    notSay: "This does not say",
-    sameData: "The same data",
-    look: "Look",
+    notSay: "What it does not say",
+    sameData: "The same file",
+    look: "To look at it",
+    publication: "Publication",
+    thePublication: "The publication",
     sheetLink: "The sheet",
     sheetNote: " has the units, the methods, and the citation.",
     chooseReading: "Choose a station. A gap in the line is a day without a measurement, not a day at zero.",
@@ -236,25 +244,33 @@ function fieldLabel(key) {
 
 if ("scrollRestoration" in history) history.scrollRestoration = "manual";
 window.addEventListener("hashchange", render);
-render();
 
 function scrollToStart() {
   window.scrollTo(0, 0);
 }
 
-async function render() {
+async function render(options) {
+  const keepScroll = Boolean(options && options.keepScroll);
+  const y = window.scrollY;
+  const draft = readSurvey();
+  if (draft) state.survey = draft;
   detachOverture();
   detachOverture = () => {};
-  scrollToStart();
+  applyChrome();
+  if (!keepScroll) scrollToStart();
   const token = ++renderToken;
   const route = routeFromHash();
   try {
-    if (!state.catalog) state.catalog = await fetchJson("catalog/index.json");
+    if (route?.kind !== "form" && !state.catalog) state.catalog = await fetchJson("catalog/index.json");
     if (token !== renderToken) return;
-    if (route) await renderDataset(route.id, route.mode, token);
+    if (route?.kind === "form") renderSurvey();
+    else if (route?.kind === "dataset") await renderDataset(route.id, route.mode, token);
     else renderCatalog();
-    scrollToStart();
-    requestAnimationFrame(scrollToStart);
+    if (keepScroll) window.scrollTo(0, y);
+    else {
+      scrollToStart();
+      requestAnimationFrame(scrollToStart);
+    }
   } catch (error) {
     if (token !== renderToken) return;
     app.innerHTML = `<p class="status-line">${esc(error.message)}</p>`;
@@ -271,16 +287,17 @@ function renderCatalog() {
   app.innerHTML = `
     ${overtureHtml()}
     <section class="catalog-block" id="catalogo">
-    <h2 class="catalog-title">Catálogo</h2>
+    <h2 class="catalog-title">${esc(t("catalog"))}</h2>
+    <p class="propose-line"><a href="#/contribuir">${esc(t("proposeLine"))}</a></p>
     <ul class="stats">
-      <li><b>${published}</b><span>${published === 1 ? "publicado" : "publicados"}</span></li>
-      <li><b>${data.length}</b><span>${data.length === 1 ? "registro" : "registros"}</span></li>
-      <li><b>${esc(span)}</b><span>cobertura del catálogo</span></li>
+      <li><b>${published}</b><span>${published === 1 ? t("publishedOne") : t("publishedMany")}</span></li>
+      <li><b>${data.length}</b><span>${data.length === 1 ? t("recordOne") : t("recordMany")}</span></li>
+      <li><b>${esc(span)}</b><span>${esc(t("coverage"))}</span></li>
     </ul>
     <div class="toolbar">
-      <input class="search" id="q" type="search" placeholder="Buscar por lugar, tema o título" value="${esc(state.query)}">
+      <input class="search" id="q" type="search" placeholder="${esc(t("search"))}" value="${esc(state.query)}">
       <div class="themes" id="themes">
-        ${themeButton("todos", "Todos")}
+        ${themeButton("todos", t("all"))}
         ${themes.map((theme) => themeButton(theme, theme)).join("")}
       </div>
     </div>
@@ -316,7 +333,7 @@ function paintRows() {
   const host = document.querySelector("#rows");
   host.innerHTML = rows.length
     ? rows.map(entryHtml).join("")
-    : `<p class="empty">Ningún dataset coincide con ese filtro.</p>`;
+    : `<p class="empty">${esc(t("empty"))}</p>`;
 }
 
 function entryHtml(item) {
@@ -329,7 +346,7 @@ function entryHtml(item) {
   return `
     <article class="entry">
       <div>
-        <h2 class="entry-title">${item.hasReading ? '<span class="badge">Lectura</span>' : ""}<a href="#/dataset/${esc(item.id)}">${esc(item.title)}</a></h2>
+        <h2 class="entry-title">${item.hasReading ? `<span class="badge">${esc(t("reading"))}</span>` : ""}<a href="#/dataset/${esc(item.id)}">${esc(item.title)}</a></h2>
         <p>${esc(item.summary)}</p>
       </div>
       <p class="meta">${badge}${esc(item.place)}<br>${esc(item.temporal.start)} – ${esc(item.temporal.end)}<br>${esc(item.themes.join(" · "))}${paper}</p>
@@ -339,7 +356,7 @@ function entryHtml(item) {
 
 async function renderDataset(id, mode, token) {
   const entry = state.catalog.datasets.find((item) => item.id === id);
-  if (!entry) throw new Error("Ese dataset no está en el catálogo.");
+  if (!entry) throw new Error(t("missing"));
   const dataset = await fetchJson(entry.path);
   if (token !== renderToken) return;
   document.title = `${dataset.title} — Open Ecosystems`;
@@ -351,33 +368,33 @@ async function renderDataset(id, mode, token) {
   app.innerHTML = reading
     ? readingDocument(dataset)
     : `
-    <p><a class="back" href="#/">← Catálogo</a></p>
+    <p><a class="back" href="#/">${esc(t("back"))}</a></p>
     ${modeSwitch(dataset, false)}
     <p class="kicker">${esc(statusLabel(dataset.status))} · v${esc(dataset.version)}</p>
     <h1>${esc(dataset.title)}</h1>
     <p class="summary">${esc(dataset.summary)}</p>
     ${lead ? figureHtml(lead) : ""}
     <dl class="facts">
-      ${fact("Lugar", dataset.spatial.place)}
-      ${fact("Periodo", `${dataset.temporal.start} – ${dataset.temporal.end}`)}
-      ${fact("Licencia", dataset.rights.license)}
+      ${fact(t("place"), dataset.spatial.place)}
+      ${fact(t("period"), `${dataset.temporal.start} – ${dataset.temporal.end}`)}
+      ${fact(t("license"), dataset.rights.license)}
       ${dataset.doi ? factLink("DOI", `https://doi.org/${dataset.doi}`, `doi.org/${dataset.doi}`) : ""}
-      ${dataset.publication ? factLink("Publicación", `https://doi.org/${dataset.publication.doi}`, dataset.publication.venue) : ""}
+      ${dataset.publication ? factLink(t("publication"), `https://doi.org/${dataset.publication.doi}`, dataset.publication.venue) : ""}
     </dl>
     <div id="viewer"></div>
     <div id="chart"></div>
     ${tripticoHtml(dataset.triptico)}
     <section class="panel-block">
-      <p class="index">Ficha técnica</p>
-      <h2>Cómo está hecho</h2>
+      <p class="index">${esc(t("technical"))}</p>
+      <h2>${esc(t("made"))}</h2>
       ${sheetHtml([
-        ["Instrumentos", dataset.methods.instruments.join(", ") || "No indicados"],
-        ["CRS de origen", dataset.methods.crsOriginal],
-        ["CRS publicado", dataset.spatial.crs],
-        ["Extensión", dataset.spatial.bbox.join(", ")],
-        ["Preparación", dataset.provenance.preparationNote],
+        [t("instruments"), dataset.methods.instruments.join(", ") || t("unstated")],
+        [t("crsOriginal"), dataset.methods.crsOriginal],
+        [t("crsPublished"), dataset.spatial.crs],
+        [t("extent"), dataset.spatial.bbox.join(", ")],
+        [t("preparation"), dataset.provenance.preparationNote],
       ])}
-      <h2>Variables</h2>
+      <h2>${esc(t("variables"))}</h2>
       <table class="sheet">
         <tbody>
           ${dataset.variables.map(variableRow).join("")}
@@ -385,15 +402,15 @@ async function renderDataset(id, mode, token) {
       </table>
     </section>
     <section class="panel-block">
-      <p class="index">Archivos</p>
-      <h2>Qué se puede descargar</h2>
+      <p class="index">${esc(t("files"))}</p>
+      <h2>${esc(t("download"))}</h2>
       <ul class="files">
         ${dataset.files.map((file) => fileHtml(dataset, file)).join("")}
       </ul>
     </section>
     <section class="panel-block">
-      <p class="index">Cita</p>
-      <h2>Cómo citarlo</h2>
+      <p class="index">${esc(t("cite"))}</p>
+      <h2>${esc(t("howCite"))}</h2>
       <textarea class="citation" id="citation" readonly>${esc(dataset.citation)}</textarea>
       ${citeActions("cite-dataset")}
       <p class="chart-note">${esc(dataset.rights.attribution)}</p>
@@ -411,7 +428,7 @@ async function renderDataset(id, mode, token) {
       dataset,
       wide,
       token,
-      reading ? "Elige una estación. Un hueco en la línea es un día sin medición, no un día en cero." : ""
+      reading ? t("chooseReading") : ""
     );
   }
   if (!reading) previewSmallTables(dataset, token);
@@ -428,23 +445,23 @@ function readingDocument(dataset) {
   `).join("");
   return `
     <article class="reading">
-    <p><a class="back" href="#/">← Catálogo</a></p>
+    <p><a class="back" href="#/">${esc(t("back"))}</a></p>
     ${modeSwitch(dataset, true)}
-    <p class="kicker">Lectura</p>
+    <p class="kicker">${esc(t("reading"))}</p>
     <h1>${esc(reading.title)}</h1>
     <p class="lede">${esc(reading.lede)}</p>
     ${sections}
     <section class="limits">
-      <h2>Lo que no dice</h2>
+      <h2>${esc(t("notSay"))}</h2>
       <ul>${reading.limits.map((item) => `<li>${esc(item)}</li>`).join("")}</ul>
     </section>
     <section class="panel-block">
-      <p class="index">El mismo archivo</p>
-      <h2>Para mirarlo</h2>
+      <p class="index">${esc(t("sameData"))}</p>
+      <h2>${esc(t("look"))}</h2>
       <div id="viewer"></div>
       <div id="chart"></div>
-      ${dataset.publication ? `<p>Publicación: <a href="https://doi.org/${esc(dataset.publication.doi)}">${esc(dataset.publication.title)}</a>. ${esc(publicationWhere(dataset.publication))}.</p>` : ""}
-      <p class="chart-note"><a href="#/dataset/${encodeURIComponent(dataset.id)}/ficha">La ficha</a> tiene unidades, métodos y la cita.</p>
+      ${dataset.publication ? `<p>${esc(t("publication"))}: <a href="https://doi.org/${esc(dataset.publication.doi)}">${esc(dataset.publication.title)}</a>. ${esc(publicationWhere(dataset.publication))}.</p>` : ""}
+      <p class="chart-note"><a href="#/dataset/${encodeURIComponent(dataset.id)}/ficha">${esc(t("sheetLink"))}</a>${esc(t("sheetNote"))}</p>
     </section>
     </article>
   `;
@@ -454,21 +471,21 @@ function modeSwitch(dataset, reading) {
   if (!dataset.divulgacion) return "";
   const base = `#/dataset/${encodeURIComponent(dataset.id)}`;
   return `
-    <nav class="modes" aria-label="Tipo de lectura">
-      <a href="${base}/lectura"${reading ? ' aria-current="page"' : ""}>Lectura</a>
-      <a href="${base}/ficha"${reading ? "" : ' aria-current="page"'}>Ficha</a>
+    <nav class="modes" aria-label="${esc(t("readingKind"))}">
+      <a href="${base}/lectura"${reading ? ' aria-current="page"' : ""}>${esc(t("reading"))}</a>
+      <a href="${base}/ficha"${reading ? "" : ' aria-current="page"'}>${esc(t("sheet"))}</a>
     </nav>
   `;
 }
 
 function overtureHtml() {
   const list = beats();
-  const marks = list.map((_, index) => `<button type="button" data-beat="${index}" aria-label="Parte ${index + 1}"></button>`).join("");
+  const marks = list.map((_, index) => `<button type="button" data-beat="${index}" aria-label="${esc(t("part"))} ${index + 1}"></button>`).join("");
   const beatHtml = list.map((beat, index) => `
     <article class="beat" data-beat="${index}">
       <p class="kicker">${esc(beat.kicker)}</p>
       <h1>${esc(beat.title)}</h1>
-      ${beat.body ? `<p class="lede">${esc(beat.body)}</p>` : `<p class="scroll-hint">Baja</p>`}
+      ${beat.body ? `<p class="lede">${esc(beat.body)}</p>` : `<p class="scroll-hint">${esc(t("down"))}</p>`}
     </article>
   `).join("");
   return `
@@ -824,8 +841,8 @@ function tripticoHtml(triptico) {
       ${panelHtml("02", triptico.lectura.title, triptico.lectura.body, `<ul class="caveats">${triptico.lectura.caveats.map((item) => `<li>${esc(item)}</li>`).join("")}</ul>`)}
       ${panelHtml("03", triptico.uso.title, triptico.uso.body, `
         <div class="split">
-          <div><h3>Responde</h3><ul>${triptico.uso.answers.map((item) => `<li>${esc(item)}</li>`).join("")}</ul></div>
-          <div><h3>No responde</h3><ul>${triptico.uso.doesNotAnswer.map((item) => `<li>${esc(item)}</li>`).join("")}</ul></div>
+          <div><h3>${esc(t("answers"))}</h3><ul>${triptico.uso.answers.map((item) => `<li>${esc(item)}</li>`).join("")}</ul></div>
+          <div><h3>${esc(t("doesNot"))}</h3><ul>${triptico.uso.doesNotAnswer.map((item) => `<li>${esc(item)}</li>`).join("")}</ul></div>
         </div>
       `)}
     </div>
@@ -876,7 +893,7 @@ function factLink(label, href, text) {
 function citeActions(id) {
   return `
     <p class="cite-actions" id="${id}">
-      <button class="copy" type="button" data-cite="text" data-label="Cita">Cita</button>
+      <button class="copy" type="button" data-cite="text" data-label="${esc(t("cite"))}">${esc(t("cite"))}</button>
       <button class="copy" type="button" data-cite="bib" data-label="BibTeX">BibTeX</button>
       <button class="copy" type="button" data-cite="ris" data-label="RIS">RIS</button>
     </p>
@@ -887,7 +904,7 @@ function publicationHtml(dataset) {
   const paper = dataset.publication;
   if (!paper) return "";
   return `
-    <h2>La publicación</h2>
+    <h2>${esc(t("thePublication"))}</h2>
     <p><a href="https://doi.org/${esc(paper.doi)}">${esc(paper.title)}</a></p>
     <p class="chart-note">${esc(publicationWhere(paper))}.</p>
     <textarea class="citation" id="paper" readonly>${esc(publicationPlain(paper))}</textarea>
@@ -981,9 +998,11 @@ function currentDatasetId() {
 }
 
 function routeFromHash() {
-  const match = decodeURIComponent(location.hash.replace(/^#/, "")).match(/^\/dataset\/([^/]+)(?:\/(lectura|ficha))?\/?$/);
+  const path = decodeURIComponent(location.hash.replace(/^#/, ""));
+  if (path === "/contribuir" || path === "/contribute") return { kind: "form" };
+  const match = path.match(/^\/dataset\/([^/]+)(?:\/(lectura|ficha))?\/?$/);
   if (!match) return null;
-  return { id: match[1], mode: match[2] || "lectura" };
+  return { kind: "dataset", id: match[1], mode: match[2] || "lectura" };
 }
 
 function datasetIdFromHash() {
@@ -1031,7 +1050,7 @@ function bindCitation(box, actions, textFor) {
     }
     if (!copied) return;
     for (const item of actions.querySelectorAll("button")) item.textContent = item.dataset.label;
-    button.textContent = "Copiada";
+    button.textContent = t("copied");
   });
 }
 
@@ -1183,3 +1202,505 @@ function esc(value) {
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
   }[char]));
 }
+
+function applyChrome() {
+  document.documentElement.lang = state.lang;
+  const skip = document.querySelector(".skip");
+  if (skip) skip.textContent = t("skip");
+  const catalog = document.querySelector("#nav-catalog");
+  if (catalog) catalog.textContent = t("catalog");
+  const propose = document.querySelector("#nav-propose");
+  if (propose) {
+    propose.textContent = t("propose");
+    if (routeFromHash()?.kind === "form") propose.setAttribute("aria-current", "page");
+    else propose.removeAttribute("aria-current");
+  }
+  const footer = document.querySelector(".colophon p");
+  if (footer) footer.innerHTML = t("colophon");
+  const lang = document.querySelector(".lang");
+  if (lang) lang.setAttribute("aria-label", t("langLabel"));
+  for (const button of document.querySelectorAll(".lang button")) {
+    button.setAttribute("aria-pressed", String(button.dataset.lang === state.lang));
+  }
+}
+
+const FORM = {
+  es: {
+    title: "Un registro nuevo",
+    lede: "Esto no publica nada. Pregunta lo que hace falta para una lectura como la de la nieve: páginas con ilustración, lo que el archivo no dice, y la cita. Al final se descarga un dataset.json. Las imágenes y las tablas se agregan a mano.",
+    step1: "Qué se midió",
+    step2: "La lectura",
+    step2hint: "Como el libro de la nieve. Un título, una frase de entrada, y páginas. Cada página es un dibujo y un párrafo.",
+    step3: "Cómo se lee el número",
+    step4: "La publicación, si hay",
+    qTitle: "Título",
+    hTitle: "Qué se midió, dónde y cuándo.",
+    qSummary: "En un párrafo",
+    hSummary: "Qué es, quién lo anotó y qué no alcanza a decir. Si los números no son reales, la primera frase tiene que decirlo.",
+    qPlace: "Lugar",
+    qCountry: "País",
+    hCountry: "Códigos de dos letras, separados por coma. Chile es CL.",
+    qStart: "Primer día",
+    qEnd: "Último día",
+    qWest: "Oeste",
+    qSouth: "Sur",
+    qEast: "Este",
+    qNorth: "Norte",
+    hBbox: "El recuadro, en grados. Oeste, sur, este, norte.",
+    qThemes: "Temas",
+    hThemes: "Separados por coma. Por ejemplo: nieve, agua.",
+    qReadTitle: "Título de la lectura",
+    hReadTitle: "La frase grande con la que se abre. No tiene que repetir el título del archivo.",
+    qLede: "La frase de entrada",
+    hLede: "Dos o tres oraciones, para quien no va a abrir la tabla.",
+    page: "Página",
+    qPageTitle: "Título de la página",
+    qPageBody: "Texto",
+    hPageBody: "Un párrafo junto a la ilustración. Una sola cosa.",
+    qCaption: "Pie de la ilustración",
+    hCaption: "Qué muestra el dibujo, y que no es una medición. Si queda vacío, la página sale sin imagen.",
+    qLimit: "Lo que no dice",
+    hLimit: "Una pregunta que parece posible y este archivo no responde.",
+    qUnit: "Unidad",
+    hUnit: "cm, °C, m. Si el archivo no la escribe, deja sin marcar la casilla.",
+    qUnitInFile: "La unidad está escrita en el archivo",
+    qEmpty: "Una celda vacía",
+    hEmpty: "En la nieve, vacía no es cero. Escribe qué significa aquí.",
+    qAnswers: "Qué sí se puede preguntar",
+    hAnswers: "Una pregunta por línea.",
+    qInstrument: "Instrumento",
+    qCreators: "Quién lo hizo",
+    hCreators: "Una persona por línea: Apellido, Nombre.",
+    qCitation: "Cita del archivo",
+    hCitation: "El párrafo listo para copiar, con la versión.",
+    qDoi: "DOI del archivo",
+    hDoi: "Si no hay, déjalo vacío.",
+    qHasPaper: "Hay un artículo publicado",
+    qPaperTitle: "Título del artículo",
+    qVenue: "Revista",
+    qYear: "Año",
+    qPaperDoi: "DOI del artículo",
+    qVolume: "Volumen",
+    qIssue: "Número",
+    qPages: "Páginas",
+    qPreview: "Cómo se mira",
+    hPreview: "La nieve se mira como un mapa de estaciones y, al elegir una, la serie del día.",
+    optMap: "Mapa de puntos",
+    optSeries: "Serie en el tiempo",
+    optNone: "Sin visor, solo la lectura",
+    download: "Descargar dataset.json",
+    saved: "Listo. Crea datasets/ con ese id, guarda este archivo como dataset.json, pon las ilustraciones en media/ y las tablas en data/, y corre python scripts/build_catalog.py.",
+    need: "Falta esto",
+  },
+  en: {
+    title: "A new record",
+    lede: "This publishes nothing. It asks for what a reading like the snow record needs: pages with an illustration, what the file does not say, and the citation. At the end it downloads a dataset.json. Images and tables are added by hand.",
+    step1: "What was measured",
+    step2: "The reading",
+    step2hint: "Like the snow book. A title, an opening line, and pages. Each page is a picture and a paragraph.",
+    step3: "How to read the number",
+    step4: "The publication, if there is one",
+    qTitle: "Title",
+    hTitle: "What was measured, where, and when.",
+    qSummary: "In one paragraph",
+    hSummary: "What it is, who recorded it, and what it cannot say. If the numbers are not real, the first sentence has to say so.",
+    qPlace: "Place",
+    qCountry: "Country",
+    hCountry: "Two-letter codes, separated by commas. Chile is CL.",
+    qStart: "First day",
+    qEnd: "Last day",
+    qWest: "West",
+    qSouth: "South",
+    qEast: "East",
+    qNorth: "North",
+    hBbox: "The box, in degrees. West, south, east, north.",
+    qThemes: "Themes",
+    hThemes: "Separated by commas. For example: snow, water.",
+    qReadTitle: "Title of the reading",
+    hReadTitle: "The large opening line. It does not have to repeat the file title.",
+    qLede: "Opening line",
+    hLede: "Two or three sentences, for someone who will not open the table.",
+    page: "Page",
+    qPageTitle: "Page title",
+    qPageBody: "Text",
+    hPageBody: "One paragraph beside the illustration. One thing only.",
+    qCaption: "Illustration caption",
+    hCaption: "What the drawing shows, and that it is not a measurement. If empty, the page has no image.",
+    qLimit: "What it does not say",
+    hLimit: "A question that seems possible and this file does not answer.",
+    qUnit: "Unit",
+    hUnit: "cm, °C, m. If the file does not write it, leave the box unchecked.",
+    qUnitInFile: "The unit is written in the file",
+    qEmpty: "An empty cell",
+    hEmpty: "In the snow record, empty is not zero. Write what it means here.",
+    qAnswers: "What can be asked",
+    hAnswers: "One question per line.",
+    qInstrument: "Instrument",
+    qCreators: "Who made it",
+    hCreators: "One person per line: Family name, Given name.",
+    qCitation: "Citation of the file",
+    hCitation: "The paragraph ready to copy, with the version.",
+    qDoi: "DOI of the file",
+    hDoi: "If there is none, leave it empty.",
+    qHasPaper: "There is a published article",
+    qPaperTitle: "Article title",
+    qVenue: "Journal",
+    qYear: "Year",
+    qPaperDoi: "DOI of the article",
+    qVolume: "Volume",
+    qIssue: "Issue",
+    qPages: "Pages",
+    qPreview: "How it is looked at",
+    hPreview: "The snow record is a map of stations and, once one is chosen, the daily series.",
+    optMap: "Map of points",
+    optSeries: "Time series",
+    optNone: "No viewer, only the reading",
+    download: "Download dataset.json",
+    saved: "Done. Create datasets/ with that id, save this file as dataset.json, put the illustrations in media/ and the tables in data/, and run python scripts/build_catalog.py.",
+    need: "Still needed",
+  },
+};
+
+function f(key) {
+  return (FORM[state.lang] && FORM[state.lang][key]) || FORM.es[key] || key;
+}
+
+function readSurvey() {
+  const form = document.querySelector("#survey");
+  if (!form) return null;
+  const data = {};
+  for (const el of form.elements) {
+    if (!el.name) continue;
+    data[el.name] = el.type === "checkbox" ? el.checked : el.value;
+  }
+  return data;
+}
+
+function field(name, label, hint, kind = "text") {
+  const value = state.survey?.[name] ?? "";
+  const control = kind === "area"
+    ? `<textarea id="${name}" name="${name}" rows="4">${esc(value)}</textarea>`
+    : `<input id="${name}" name="${name}" type="${kind}" value="${esc(value)}">`;
+  return `<div class="ask"><label for="${name}">${esc(label)}</label>${hint ? `<p class="hint">${esc(hint)}</p>` : ""}${control}</div>`;
+}
+
+function renderSurvey() {
+  document.title = `${f("title")} — Open Ecosystems`;
+  const preview = state.survey?.preview || "map-points";
+  const pages = [1, 2, 3].map((n) => `
+    <fieldset class="survey-step">
+      <legend>${esc(f("page"))} ${n}</legend>
+      ${field(`s${n}title`, f("qPageTitle"))}
+      ${field(`s${n}body`, f("qPageBody"), f("hPageBody"), "area")}
+      ${field(`s${n}caption`, f("qCaption"), n === 1 ? f("hCaption") : "")}
+    </fieldset>
+  `).join("");
+  app.innerHTML = `
+    <article class="survey">
+      <p><a class="back" href="#/">${esc(t("back"))}</a></p>
+      <h1>${esc(f("title"))}</h1>
+      <p class="lede">${esc(f("lede"))}</p>
+      <form id="survey">
+        <section class="survey-step">
+          <p class="kicker">01</p>
+          <h2>${esc(f("step1"))}</h2>
+          ${field("title", f("qTitle"), f("hTitle"))}
+          ${field("summary", f("qSummary"), f("hSummary"), "area")}
+          ${field("place", f("qPlace"))}
+          ${field("country", f("qCountry"), f("hCountry"))}
+          ${field("start", f("qStart"), "", "date")}
+          ${field("end", f("qEnd"), "", "date")}
+          <div class="bbox">
+            ${field("west", f("qWest"), f("hBbox"), "number")}
+            ${field("south", f("qSouth"), "", "number")}
+            ${field("east", f("qEast"), "", "number")}
+            ${field("north", f("qNorth"), "", "number")}
+          </div>
+          ${field("themes", f("qThemes"), f("hThemes"))}
+        </section>
+        <section class="survey-step">
+          <p class="kicker">02</p>
+          <h2>${esc(f("step2"))}</h2>
+          <p class="hint">${esc(f("step2hint"))}</p>
+          ${field("readTitle", f("qReadTitle"), f("hReadTitle"))}
+          ${field("lede", f("qLede"), f("hLede"), "area")}
+          ${pages}
+          ${field("limit1", f("qLimit"), f("hLimit"))}
+          ${field("limit2", f("qLimit"))}
+          ${field("limit3", f("qLimit"))}
+        </section>
+        <section class="survey-step">
+          <p class="kicker">03</p>
+          <h2>${esc(f("step3"))}</h2>
+          ${field("unit", f("qUnit"), f("hUnit"))}
+          <div class="ask ask-check"><label><input type="checkbox" name="unitInFile" ${state.survey?.unitInFile ? "checked" : ""}> ${esc(f("qUnitInFile"))}</label></div>
+          ${field("emptyCell", f("qEmpty"), f("hEmpty"), "area")}
+          ${field("answers", f("qAnswers"), f("hAnswers"), "area")}
+          ${field("instrument", f("qInstrument"))}
+          ${field("creators", f("qCreators"), f("hCreators"), "area")}
+          ${field("citation", f("qCitation"), f("hCitation"), "area")}
+          ${field("doi", f("qDoi"), f("hDoi"))}
+          <div class="ask">
+            <label for="preview">${esc(f("qPreview"))}</label>
+            <p class="hint">${esc(f("hPreview"))}</p>
+            <select id="preview" name="preview">
+              <option value="map-points" ${preview === "map-points" ? "selected" : ""}>${esc(f("optMap"))}</option>
+              <option value="time-series" ${preview === "time-series" ? "selected" : ""}>${esc(f("optSeries"))}</option>
+              <option value="none" ${preview === "none" ? "selected" : ""}>${esc(f("optNone"))}</option>
+            </select>
+          </div>
+        </section>
+        <section class="survey-step">
+          <p class="kicker">04</p>
+          <h2>${esc(f("step4"))}</h2>
+          <div class="ask ask-check"><label><input type="checkbox" name="hasPaper" ${state.survey?.hasPaper ? "checked" : ""}> ${esc(f("qHasPaper"))}</label></div>
+          ${field("paperTitle", f("qPaperTitle"))}
+          ${field("venue", f("qVenue"))}
+          ${field("year", f("qYear"))}
+          ${field("paperDoi", f("qPaperDoi"))}
+          ${field("volume", f("qVolume"))}
+          ${field("issue", f("qIssue"))}
+          ${field("pages", f("qPages"))}
+        </section>
+        <button class="copy" type="submit">${esc(f("download"))}</button>
+        <div class="survey-note" id="survey-note"></div>
+      </form>
+    </article>
+  `;
+  document.querySelector("#survey").addEventListener("submit", downloadSurvey);
+}
+
+function downloadSurvey(event) {
+  event.preventDefault();
+  const data = readSurvey();
+  state.survey = data;
+  const errors = surveyErrors(data);
+  const note = document.querySelector("#survey-note");
+  if (errors.length) {
+    note.innerHTML = `<p>${esc(f("need"))}</p><ul>${errors.map((item) => `<li>${esc(item)}</li>`).join("")}</ul>`;
+    return;
+  }
+  const dataset = surveyDataset(data);
+  const blob = new Blob([`${JSON.stringify(dataset, null, 2)}\n`], { type: "application/json" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "dataset.json";
+  link.click();
+  URL.revokeObjectURL(link.href);
+  note.textContent = f("saved");
+}
+
+function surveyErrors(data) {
+  const errors = [];
+  const need = (ok, label) => { if (!ok) errors.push(label); };
+  need((data.title || "").trim().length >= 10, f("qTitle"));
+  need((data.summary || "").trim().length >= 80, f("qSummary"));
+  need((data.place || "").trim().length >= 3, f("qPlace"));
+  need(countryCodes(data.country).length > 0, f("qCountry"));
+  need(data.start && data.end, `${f("qStart")} / ${f("qEnd")}`);
+  const box = [data.west, data.south, data.east, data.north].map(Number);
+  need(box.every((n) => Number.isFinite(n)) && box[0] < box[2] && box[1] < box[3], f("hBbox"));
+  need((data.readTitle || "").trim().length >= 10, f("qReadTitle"));
+  need((data.lede || "").trim().length >= 40, f("qLede"));
+  const pages = surveyPages(data);
+  need(pages.length >= 2, f("step2"));
+  need(surveyLines(data, "limit").length >= 1, f("qLimit"));
+  need((data.unit || "").trim().length >= 1, f("qUnit"));
+  need((data.emptyCell || "").trim().length >= 20, f("qEmpty"));
+  need(linesOf(data.answers).some((line) => line.length >= 10), f("qAnswers"));
+  need((data.instrument || "").trim().length >= 2, f("qInstrument"));
+  need(linesOf(data.creators).length >= 1, f("qCreators"));
+  need((data.citation || "").trim().length >= 40, f("qCitation"));
+  if ((data.doi || "").trim() && !/^10\..+/.test(data.doi.trim())) errors.push(f("qDoi"));
+  if (data.hasPaper) {
+    need((data.paperTitle || "").trim().length >= 10, f("qPaperTitle"));
+    need((data.venue || "").trim().length >= 2, f("qVenue"));
+    need(/^\d{4}$/.test((data.year || "").trim()), f("qYear"));
+    need(/^10\..+/.test((data.paperDoi || "").trim()), f("qPaperDoi"));
+  }
+  return errors;
+}
+
+function surveyDataset(data) {
+  const id = slugify(data.title);
+  const today = new Date().toISOString().slice(0, 10);
+  const creators = linesOf(data.creators).map((name) => ({ name }));
+  const limits = surveyLines(data, "limit").slice(0, 5);
+  const answers = linesOf(data.answers).filter((line) => line.length >= 10).slice(0, 5);
+  const themes = data.themes.split(",").map((item) => item.trim()).filter((item) => item.length >= 3).slice(0, 6);
+  const pages = surveyPages(data);
+  const es = state.lang !== "en";
+  const unit = data.unit.trim();
+  const unitNote = data.unitInFile
+    ? (es ? `La unidad es ${unit}, y el archivo la escribe.` : `The unit is ${unit}, and the file writes it.`)
+    : (es ? `La unidad se lee como ${unit}. El archivo no la escribe.` : `The unit is read as ${unit}. The file does not write it.`);
+  const variable = slugVar(data.title);
+  let figure = 0;
+  const sections = pages.map((page) => {
+    const section = { title: page.title, body: page.body };
+    if (page.caption.length >= 10) {
+      figure += 1;
+      section.image = `media/pagina-${figure}.jpg`;
+      section.caption = page.caption;
+    }
+    return section;
+  });
+  const files = sections.filter((section) => section.image).map((section) => ({
+    role: "figure",
+    title: section.title.slice(0, 120),
+    path: section.image,
+    mediaType: "image/jpeg",
+    description: section.caption.slice(0, 400),
+  }));
+  files.push({
+    role: "table",
+    title: es ? "Tabla del registro" : "Record table",
+    path: "data/serie.csv",
+    mediaType: "text/csv",
+    description: es
+      ? "Tabla todavía por copiar a esta carpeta. El formulario no sube archivos."
+      : "Table still to be copied into this folder. The form does not upload files.",
+  });
+  const dataset = {
+    id,
+    title: data.title.trim(),
+    summary: data.summary.trim(),
+    language: state.lang === "en" ? "en" : "es",
+    status: "draft",
+    version: "0.1.0",
+    published: today,
+    updated: today,
+    citation: data.citation.trim(),
+    themes: themes.length ? themes : ["agua"],
+    spatial: {
+      place: data.place.trim(),
+      country: countryCodes(data.country),
+      bbox: [Number(data.west), Number(data.south), Number(data.east), Number(data.north)],
+      crs: "EPSG:4326",
+    },
+    temporal: { start: data.start, end: data.end, resolution: es ? "días" : "days" },
+    creators,
+    rights: {
+      license: "CC-BY-4.0",
+      attribution: `${creators.map((item) => item.name).join(es ? " y " : " and ")} (${today.slice(0, 4)}), CC-BY-4.0.`,
+      derivedFrom: null,
+    },
+    provenance: {
+      origin: "otro",
+      sourceName: data.place.trim(),
+      sourceUrl: null,
+      preparedBy: "Open Ecosystems",
+      preparationNote: es
+        ? "Borrador armado con el formulario. Falta copiar la tabla a data/ y las ilustraciones a media/."
+        : "Draft assembled with the form. The table still has to be copied into data/ and the illustrations into media/.",
+    },
+    methods: {
+      summary: `${data.instrument.trim()}. ${unitNote} ${data.emptyCell.trim()}`.slice(0, 800),
+      instruments: [data.instrument.trim()],
+      crsOriginal: es ? "desconocido" : "unknown",
+      processing: es
+        ? "El formulario no transformó archivos. Quien publique este borrador tiene que anotar aquí qué copió y qué no volvió a calcular."
+        : "The form did not transform any files. Whoever publishes this draft has to note here what was copied and what was not recalculated.",
+    },
+    variables: [{
+      id: variable,
+      name: data.title.trim().slice(0, 80),
+      unit: data.unit.trim(),
+      description: unitNote,
+      column: "valor",
+    }],
+    triptico: {
+      contexto: {
+        title: data.title.trim().slice(0, 80),
+        body: (es
+          ? `${data.summary.trim()} El lugar es ${data.place.trim()}, entre ${data.start} y ${data.end}.`
+          : `${data.summary.trim()} The place is ${data.place.trim()}, from ${data.start} to ${data.end}.`
+        ).slice(0, 2000),
+        highlights: [data.place.trim().slice(0, 80), `${data.start} – ${data.end}`],
+      },
+      lectura: {
+        title: es ? "Cómo se lee el archivo" : "How to read the file",
+        body: `${unitNote} ${data.emptyCell.trim()} ${data.summary.trim()}`.slice(0, 2000),
+        caveats: limits,
+      },
+      uso: {
+        title: es ? "Para qué alcanza" : "What it can do",
+        body: `${data.summary.trim()} ${limits[0] || ""}`.slice(0, 2000),
+        answers,
+        doesNotAnswer: limits,
+      },
+    },
+    divulgacion: {
+      title: data.readTitle.trim(),
+      lede: data.lede.trim(),
+      sections,
+      limits,
+    },
+    files,
+    preview: surveyPreview(data.preview, variable),
+    related: [],
+  };
+  if ((data.doi || "").trim()) dataset.doi = data.doi.trim();
+  if (data.hasPaper) {
+    dataset.publication = {
+      title: data.paperTitle.trim(),
+      venue: data.venue.trim(),
+      doi: data.paperDoi.trim(),
+      year: data.year.trim(),
+      creators,
+    };
+    if ((data.volume || "").trim()) dataset.publication.volume = data.volume.trim();
+    if ((data.issue || "").trim()) dataset.publication.issue = data.issue.trim();
+    if ((data.pages || "").trim()) dataset.publication.pages = data.pages.trim();
+  }
+  return dataset;
+}
+
+function surveyPages(data) {
+  return [1, 2, 3].map((n) => ({
+    title: (data[`s${n}title`] || "").trim(),
+    body: (data[`s${n}body`] || "").trim(),
+    caption: (data[`s${n}caption`] || "").trim(),
+  })).filter((page) => page.title.length >= 3 && page.body.length >= 40);
+}
+
+function surveyLines(data, prefix) {
+  return [1, 2, 3].map((n) => (data[`${prefix}${n}`] || "").trim()).filter((line) => line.length >= 10);
+}
+
+function surveyPreview(kind, variable) {
+  if (kind === "time-series") {
+    return { kind: "time-series", file: "data/serie.csv", timeField: "date", valueField: variable };
+  }
+  if (kind === "map-points") return { kind: "map-points", file: "data/estaciones.geojson", valueField: variable };
+  return { kind: "none" };
+}
+
+function linesOf(value) {
+  return String(value || "").split(/\n/).map((line) => line.trim()).filter(Boolean);
+}
+
+function countryCodes(value) {
+  return String(value || "").split(/[, ]+/).map((code) => code.trim().toUpperCase()).filter((code) => /^[A-Z]{2}$/.test(code));
+}
+
+function slugify(value) {
+  const slug = String(value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  return slug.slice(0, 80) || "registro";
+}
+
+function slugVar(value) {
+  const id = slugify(value).replace(/-/g, "_").replace(/[^a-z0-9_]/g, "");
+  const safe = /^[a-z]/.test(id) ? id : `v_${id}`;
+  return safe.slice(0, 40) || "valor";
+}
+
+document.querySelector(".lang").addEventListener("click", (event) => {
+  const button = event.target.closest("button");
+  if (!button) return;
+  state.lang = button.dataset.lang === "en" ? "en" : "es";
+  localStorage.setItem("open-ecos-lang", state.lang);
+  render({ keepScroll: true });
+});
+
+render();

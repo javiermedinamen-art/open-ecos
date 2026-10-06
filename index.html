@@ -8,14 +8,19 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Schibsted+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="site/site.css?v=14">
+  <link rel="stylesheet" href="site/site.css?v=15">
 </head>
 <body>
   <a class="skip" href="#app">Saltar al contenido</a>
   <header class="topbar">
     <a class="wordmark" href="#/">Open Ecosystems</a>
     <nav>
-      <a href="#/">Catálogo</a>
+      <a href="#/" id="nav-catalog">Catálogo</a>
+      <a href="#/contribuir" id="nav-propose">Proponer</a>
+      <span class="lang" role="group" aria-label="Idioma">
+        <button type="button" data-lang="es" aria-pressed="true">ES</button>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      </span>
     </nav>
   </header>
   <main id="app">
@@ -24,6 +29,6 @@
   <footer class="colophon">
     <p>Los registros están en <span class="mono">catalog/index.json</span> y en la ficha de cada dataset. Detrás de esta página no hay una base de datos.</p>
   </footer>
-  <script src="site/site.js?v=30"></script>
+  <script src="site/site.js?v=32"></script>
 </body>
 </html>
